@@ -1,0 +1,73 @@
+!-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+! MODEL  BFM - Biogeochemical Flux Model version 2.50-g
+!-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+!BOP
+!
+! !ROUTINE: Phaeo
+!
+! DESCRIPTION
+!   List of parameters values
+
+!   This file is generated directly from OpenSesame model code, using a code 
+!   generator which transposes from the sesame meta language into F90.
+!   F90 code generator written by P. Ruardij.
+!   structure of the code based on ideas of M. Vichi.
+!
+! !INTERFACE
+! parameter values for mem_Phaeo filled by InitPhaeo
+!
+
+!  
+!
+! !AUTHORS
+!   mfstep/ERSEM team
+!
+! !REVISION_HISTORY
+!   ---
+!
+! COPYING
+!   
+!   Copyright (C) 2006 P. Ruardij, the mfstep group, the ERSEM team 
+!   (rua@nioz.nl, vichi@bo.ingv.it)
+!
+!   This program is free software; you can redistribute it and/or modify
+!   it under the terms of the GNU General Public License as published by
+!   the Free Software Foundation;
+!   This program is distributed in the hope that it will be useful,
+!   but WITHOUT ANY WARRANTY; without even the implied warranty of
+!   MERCHANTEABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!   GNU General Public License for more details.
+!
+!EOP
+!-------------------------------------------------------------------------!
+!BOC
+! namelist /Phaeo_parameters/ p_qmR3P6, &
+!   p_qkR3P6 ,p_sP2P6,p_cP2P6n,p_cP2P6p
+
+&Phaeo_parameters
+p_qmR3P6 = 15.0,
+p_qkR3P6 = 2.0,
+p_sP2P6 = 0.01,
+p_clP2P6n = 10.0,
+p_clP2P6p = 0.6,
+p_cmP2P6n = 32.0,
+p_cmP2P6p =2.0,
+p_wP6c =14.2e-9,
+p_dP6m=7.0e-6,
+p_max_ColSize=10000.0,
+p_steep_mort=5.0
+p_shearE=0.01,
+p_diff_N1=38.3e-6,
+p_diff_N3=97.0e-6 ,
+p_diff_N4=102.0e-6,
+p_diff_urea=51.0e-6,
+p_cuY3a=10.0,225.0,
+p_cuZ4a=10.0,75.0,
+p_cuZ5a=0.0,1.0,
+/
+
+
+!BOP
+!-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+! MODEL  BFM - Biogeochemical Flux Model version 2.50
+!-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

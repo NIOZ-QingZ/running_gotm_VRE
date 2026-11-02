@@ -1,0 +1,11 @@
+*****************************
+Starting GOTM-BFM run
+Run set from  1972-01-01 00:00:00  to  2008-12-31 00:00:00
+copying input files to  /export/lv9/user/qzhan/model_output/active_runs/gotm//OysterGrounds
+mkdir: cannot create directory '/export/lv9/user/qzhan/model_output/active_runs/gotm//OysterGrounds': File exists
+mkdir: cannot create directory '/export/lv9/user/qzhan/model_output/active_runs/gotm//OysterGrounds/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/opt/local/gotm/bin/
+ GOTM-BFM run FAILED
+*****************************

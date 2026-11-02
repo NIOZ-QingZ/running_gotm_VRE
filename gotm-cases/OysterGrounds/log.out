@@ -1,0 +1,1731 @@
+ ------------------------------------------------------------------------
+ GOTM started on 2026/11/02 at 11:31:34
+ ------------------------------------------------------------------------
+    init_gotm
+ ------------------------------------------------------------------------
+        configuring modules ....
+    init_airsea_yaml
+        done
+    init_observations_yaml
+    init_stokes_drift_yaml
+        done
+    init_turbulence_yaml
+        done.
+    init_gotm_fabm_yaml
+        done.
+    init_meanflow_yaml
+        done
+    init_eqstate_yaml
+        done.
+        reading model setup namelists..
+    init_eqstate_nml
+        done.
+    init_meanflow_nml
+        done.
+    init_observations_nml
+    init_stokes_drift_nml
+    init_turbulence_nml
+        done.
+    init_airsea_nml
+        done
+    init_gotm_fabm_nml
+        I could not open gotm_fabm.nml
+        If thats not what you want you have to supply gotm_fabm.nml
+        See the bio example on www.gotm.net for a working gotm_fabm.nml
+    init_gotm_fabm_input
+        OysterGrounds
+        Using           40  layers to resolve a depth of   45.000000000000000     
+        The station Oystergrounds is situated at (lat,long)    54.409999999999997        4.0199999999999996     
+        Oystergrounds
+        initializing modules....
+    init_input
+        done
+    init_time
+        Time step:         300.00000000000000       seconds
+        Time format:               2
+        Start:          1972-01-01 00:00:00
+        Stop:           2008-12-31 00:00:00
+         ==>        13514  day(s) and                     0  seconds ==>               3892032  micro time steps
+    post_init_meanflow
+        allocation meanflow memory..
+        done.
+    init_tridiagonal
+        sigma coordinates (zooming possible)
+    post_init_observations
+        allocation observation memory..
+        Reading /mimic_3d/ext_pressure/h from:
+            pressure.dat
+        Reading /mimic_3d/ext_pressure/dpdx from:
+            pressure.dat
+        Reading /mimic_3d/ext_pressure/dpdy from:
+            pressure.dat
+        Using constant /mimic_3d/w/height=    0.0000000000000000     
+        Using constant /mimic_3d/zeta=    0.0000000000000000     
+        Using constant /surface/wave/Hs=    0.0000000000000000     
+        Using constant /surface/wave/Tz=    0.0000000000000000     
+        Using constant /surface/wave/phiw=    0.0000000000000000     
+        done.
+    post_init_stokes_drift
+        allocation stokes_drift memory..
+        Stokes drift off.
+        done.
+    post_init_turbulence
+        allocation turbulence memory..
+        done.
+         
+        --------------------------------------------------------
+        You are using the k-epsilon model
+        with the following properties:
+         
+            ce1                                  =   1.4399999999999999     
+            ce2                                  =   1.9199999999999999     
+            ce3minus                             =   0.0000000000000000     
+            ce3plus                              =   1.5000000000000000     
+            sig_k                                =   1.0000000000000000     
+            sig_e                                =   1.2026526544983429     
+         
+            Value of the stability function
+            in the log-law,                   cm0 =  0.52646471083532442     
+            in shear-free turbulence,        cmsf =  0.73100601349000971     
+         
+            von Karman constant,           kappa =  0.40000000000000002     
+            homogeneous decay rate,            d =  -1.0869565217391306     
+            spatial decay rate (no shear), alpha =  -7.8246151972149427     
+            length-scale slope (no shear),     L =   4.6621345715263302E-002
+            steady-state Richardson-number, Ri_st=  0.52761894239726614     
+        --------------------------------------------------------
+         
+    post_init_airsea
+        Calculating swr=swr(t(lon),lat,cloud)
+        Albedo method:            1
+        Reading /surface/meteo/u10 from:
+            ecmwf_oystergrounds_1958_2008.dat
+        Reading /surface/meteo/v10 from:
+            ecmwf_oystergrounds_1958_2008.dat
+        Reading /surface/meteo/airp from:
+            ecmwf_oystergrounds_1958_2008.dat
+            applying scale factor =    100.00000000000000     
+        Reading /surface/meteo/airt from:
+            ecmwf_oystergrounds_1958_2008.dat
+        Reading /surface/meteo/hum from:
+            ecmwf_oystergrounds_1958_2008.dat
+        Reading /surface/meteo/cloud from:
+            ecmwf_oystergrounds_1958_2008.dat
+        Air-sea exchanges will be calculated
+            heat- and momentum-fluxes:
+                using Kondo formulation
+            net longwave radiation:
+                using Clark formulation
+        Using constant /surface/meteo/precip=    0.0000000000000000     
+        rain_impact=       F
+        calc_evaporation=  F
+        Using constant /surface/sst=    0.0000000000000000     
+        Using constant /surface/sss=    0.0000000000000000     
+        done
+    register_all_variables()
+        register_coordinate_variables()
+        register_meanflow_variables()
+        register_airsea_variables()
+        register_observation_variables()
+        register_stokes_drift_variables()
+        register_turbulence_variables()
+        register_diagnostic_variables()
+    init_output
+        Output in NetCDF (time unit is set to seconds):
+        /export/lv9/user/qzhan/model_output/active_runs/gotm/OysterGrounds/OG.nc
+    init_bio, namelist file:bio.nml
+    opening namelist file: bio.nml
+    namelist file opened: bio.nml
+        init_bio_bfm
+            pelagic variables =          56
+            pelagic transported variables =          56
+            benthic variables =         101
+            pelagic variables prepared for output         206
+            benthic variables prepared for output         469
+            benthic profile variables prepared for output          13
+            NO_BOXES_X=           1
+            NO_BOXES_Y=           1
+            NO_BOXES_Z=          40
+            NO_BOXES=          40
+            NO_BOXES_XY=           1
+            NO_BOXES_PRF=          40
+            NO_STATES=        2341
+            Step 1 of GOTM <-> BFM initialisation done ...
+ prepare_bio_output k=         903
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+ # Allocating State Variables and Rates array ...
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+ # Allocating Other Global Variables ..
+ stBenFluxS,stBenFluxE         855         890
+        Transported? Pelagic variables:
+                     R9x mg/m3 Suspended sediment
+                     O2o mmol O2/m3 Oxygen
+                     N1p mmol P/m3 Phosphate
+                     N3n mmol N/m3 Nitrate
+                     N4n mmol N/m3 Ammonium
+                     N5s mmol Si/m3 Silicate
+                     N6r mmol S--/m3 Reduction Equivalents
+                     B1c mg C/m3 Pelagic Bacteria
+                     B1n mmol N/m3 Pelagic Bacteria
+                     B1p mmol P/m3 Pelagic Bacteria
+                     Bac mg C/m3 Pelagic Nitrifiers
+                     P1c mg C/m3 Diatoms
+                     P1n mmol N/m3 Diatoms
+                     P1p mmol P/m3 Diatoms
+                     P1l mg Chl/m3 Diatoms
+                     P1s mmol Si/m3 Diatoms
+                     P2c mg C/m3 Flagellates
+                     P2n mmol N/m3 Flagellates
+                     P2p mmol P/m3 Flagellates
+                     P2l mg Chl/m3 Flagellates
+                     P3c mg C/m3 PicoPhytoPlankton
+                     P3n mmol N/m3 PicoPhytoPlankton
+                     P3p mmol P/m3 PicoPhytoPlankton
+                     P3l mg Chl/m3 PicoPhytoPlankton
+                     P4c mg C/m3 Dinoflagellates
+                     P4n mmol N/m3 Dinoflagellates
+                     P4p mmol P/m3 Dinoflagellates
+                     P4l mg Chl/m3 Dinoflagellates
+                     P5c mg C/m3 Resuspended Benthic Diatoms
+                     P5n mmol N/m3 Resuspended Benthic Diatoms
+                     P5p mmol P/m3 Resuspended Benthic Diatoms
+                     P5l mg Chl/m3 Resuspended Benthic Diatoms
+                     P5s mmol Si/m3 Resuspended Benthic Diatoms
+                     P6c mg C/m3 Phaeocystis colonies
+                     P6n mmol N/m3 Phaeocystis colonies
+                     P6p mmol P/m3 Phaeocystis colonies
+                     P6l mg Chl/m3 Phaeocystis colonies
+                     Pcc mg C/m3 Phaeo mass initiating colonies
+                     R1c mg C/m3 Labile Organic Carbon (LOC)
+                     R1n mmol N/m3 Labile Organic Carbon (LOC)
+                     R1p mmol P/m3 Labile Organic Carbon (LOC)
+                     R2c mg C/m3 TEP (long sugars)
+                     R2n mmol N/m3 TEP (long sugars)
+                     R3c mg C/m3 TEP in Phaeocystis
+                     R6c mg C/m3 Detritus
+                     R6n mmol N/m3 Detritus
+                     R6p mmol P/m3 Detritus
+                     R6s mmol Si/m3 Detritus
+                     RZc mg C/m3 FaecelPellet Detritus
+                     O3c mg C/m3 Dissolved Inorganic Carbon
+                     O3h mmol H/m3 Alkalinity
+                     Z3c mg C/m3 Carnivorous mesozooplankton
+                     Z4c mg C/m3 Omnivorous mesozooplankton
+                     Z2c mg C/m3 Filterfeederlarvae
+                     Z5c mg C/m3 Microzooplankton
+                     Z6c mg C/m3 Heterotrophic nanoflagellates (HNAN)
+            Benthic variables:
+                BP1c  mg C/m2  Benthic Diatoms
+                BP1n  mmol N/m2  Benthic Diatoms
+                BP1p  mmol P/m2  Benthic Diatoms
+                BP1l  mg Chl/m3  Benthic Diatoms
+                BP1s  mmol Si/m2  Benthic Diatoms
+                Y1c  mg C/m2  Epibenthos
+                Y1n  mmol N/m2  Epibenthos
+                Y1p  mmol P/m2  Epibenthos
+                Y2c  mg C/m2  Deposit feeders
+                Y2n  mmol N/m2  Deposit feeders
+                Y2p  mmol P/m2  Deposit feeders
+                Y4c  mg C/m2  Meiobenthos
+                Y4n  mmol N/m2  Meiobenthos
+                Y4p  mmol P/m2  Meiobenthos
+                Y5c  mg C/m2  Benthic predators
+                Y5n  mmol N/m2  Benthic predators
+                Y5p  mmol P/m2  Benthic predators
+                Yy3c  mg C/m2  Young Suspension feeders
+                Yy3n  mmol N/m2  Young Suspension feeders
+                Yy3p  mmol P/m2  Young Suspension feeders
+                Y3c  mg C/m2  (Adult) Suspension feeders
+                Y3n  mmol N/m2  (Adult) Suspension feeders
+                Y3p  mmol P/m2  (Adult) Suspension feeders
+                Ys3c  mg C/m2  Spawned mass of filterfeeder larvae
+                Q6c  mg C/m2  Particulate organic carbon
+                Q6n  mmol N/m2  Particulate organic carbon
+                Q6p  mmol P/m2  Particulate organic carbon
+                Q6s  mmol Si/m2  Particulate organic carbon
+                Q9x  mg/m2  mass of silt in water column at previous step
+                Qp9x  mg/m2  mass of silt in water column 2 steps ago
+                QSx  mg/m2  mass of silt in first 30 cm of benthic system
+                Qun  mmol N/m3  Urea
+                Q1un  mmol N/m3  Urea
+                Q2un  mmol N/m3  Urea
+                Q2c  mg C/m2  Carbohydrates
+                Q2n    Carbohydrates
+                Q12c  mg C/m2  Carbohydrates
+                Q12n    Carbohydrates
+                Q1c  mg C/m2  Labile organic carbon
+                Q1n  mmol N/m2  Labile organic carbon
+                Q1p  mmol P/m2  Labile organic carbon
+                Q11c  mg C/m2  Labile organic carbon
+                Q11n  mmol N/m2  Labile organic carbon
+                Q11p  mmol P/m2  Labile organic carbon
+                Q21c  mg C/m2  Labile organic carbon
+                Q21n  mmol N/m2  Labile organic carbon
+                Q21p  mmol P/m2  Labile organic carbon
+                H1c  mg C/m2  Aerobic benthic bacteria
+                H1n  mmol N/m2  Aerobic benthic bacteria
+                H1p  mmol P/m2  Aerobic benthic bacteria
+                H2c  mg C/m2  Anaerobic benthic bacteria
+                H2n  mmol N/m2  Anaerobic benthic bacteria
+                H2p  mmol P/m2  Anaerobic benthic bacteria
+                H3c  mg C/m2  Anaerobic benthic bacteria in anoxic layer
+                H3n  mmol N/m2  Anaerobic benthic bacteria in anoxic layer
+                H3p  mmol P/m2  Anaerobic benthic bacteria in anoxic layer
+                HNc  mg C/m2  Aerobic benthic nitrifying bacteria+archea
+                HNn  mmol N/m2  Aerobic benthic nitrifying bacteria+archea
+                HNp  mmol P/m2  Aerobic benthic nitrifying bacteria+archea
+                Hac  mg C/m2  nitrifying archea
+                Kp1p  mmol P/m2  Phosphate in prim.prod.layer
+                Kp3n  mmol N/m2  Nitrate in prim.prod.layer layer
+                Kp4n  mmol N/m2  Ammonium in prim.prod.layer
+                Kn4n  mmol N/m2  Ammonium in dark part of oxic layer
+                Kp5s  mmol Si/m2  Silicate in prim.prod.layer
+                Qpun  mmol N/m2  Urea in prim.prod.layer
+                K1p  mmol P/m2  Phosphate in oxic layer
+                K11p  mmol P/m2  Phosphate in denitrification layer
+                K21p  mmol P/m2  Phosphate in anoxic layer
+                K4n  mmol N/m2  Ammonium in oxic layer
+                K14n  mmol N/m2  Ammonium in denitrification layer
+                K24n  mmol N/m2  Ammonium in anoxic layer
+                K5s  mmol Si/m2  Silicate in oxic+denitrification layer
+                K15s  mmol Si/m2  Silicate in anoxic layer
+                K6r  mmol S--/m2  Reduction equivalents in oxic layer
+                K16r  mmol S--/m2  Reduction equivalents in denitrification layer
+                K26r  mmol S--/m2  Reduction equivalents in anoxic layer
+                K3n  mmol N/m2  Nitrate in oxic+denitrification layer
+                K13n  mmol N/m2  Nitrate in denitrification layer
+                K23n  mmol N/m2  Nitrate in anoxic layer
+                G2o  mmol O2/m2  Benthic O2
+                G4n  mmol N/m2  N2 sink for benthic system.
+                Dfm  m  Penetration Depth Benthic Diatom
+                Dcm  m  Penetration Depth Benthic chlorophyll
+                Dlm  m  Compensation Depth Benthic Diatom
+                D1m  m  Oxygen penetration depth
+                D2m  m  Denitrification layer depth
+                D6m  m  Penetration Depth organic C
+                D7m  m  Penetration Depth organic N
+                D8m  m  Penetration Depth organic P
+                D9m  m  Penetration Depth organic Si
+                DSm  m  Penetration Depth Silt
+                DH2m  m  Penetration Depth Bacteria in denitr. layer
+                DH3m  m  Penetration Depth Bacteria in anoxic layer
+                irri_bio  -  Enhancement factor due to bioirrigation
+                G3c  mg C/m2  CO2 in aerobic layer
+                G3h  mol/kg  alkalinity in aerobic layer
+                G13c  mg C/m2  CO2 in denitrification layer
+                G13h  mol/kg  alkalinity in denitrification layer
+                G23c  mg C/m2  CO2 in anaerobic layer
+                G23h  mol/kg  alkalinity in anaerobic layer
+            Using Eulerian solver
+        Using euler_forward()
+ rscalar,test_ben_on_zero_depth   1.0000000000000000      F
+        init_var_bfm
+        Read initial default initial values (3d model)
+        Read initial initial values (1d model)
+&BFM_INIT_NML
+ SURFACE_FLUX_METHOD=          3,
+ N_SURFACE_FLUXES=          3,
+ REL_MAX_SEDI_RATE=  10.000000000000000     ,
+ SFL_N3N= 0.12000000000000000     ,
+ SFL_N4N=  8.9999999999999997E-002,
+ SW_BENSILT=          0,
+ N1P0= 0.14999999999999999     ,
+ N3N0=  6.0000000000000000     ,
+ N4N0=  4.0000000000000000     ,
+ N5S0=  5.0000000000000000     ,
+ N6R0=  1.0000000000000000     ,
+ P1C0=  3.0000000000000000     ,
+ P2C0=  3.0000000000000000     ,
+ P3C0=  5.0000000000000000     ,
+ P4C0= 0.50000000000000000     ,
+ P5C0=  5.0000000000000003E-002,
+ Z2C0=  1.0000000000000000     ,
+ Z3C0=  1.0000000000000000     ,
+ Z4C0=  1.0000000000000000     ,
+ Z5C0=  3.5000000000000000     ,
+ Z6C0=  4.5000000000000000     ,
+ B1C0=  10.000000000000000     ,
+ R9X0=  1.0000000000000000     ,
+ R1C0=  1.0000000000000000     ,
+ R2C0=  1.0000000000000000E-002,
+ R6C0=  17.000000000000000     ,
+ RZC0= 0.10000000000000001     ,
+ O2O0=  300.00000000000000     ,
+ P1L0=  1.0000000000000000     ,
+ P2L0=  1.0000000000000000     ,
+ P3L0=  1.0000000000000000     ,
+ P4L0=  1.0000000000000000     ,
+ P5L0=  1.0000000000000000     ,
+ /
+&BFM_BEN_INIT_NML
+ CALC_INIT_BENNUT_STATES=          0,
+ P_PORO0= 0.42299999999999999     ,
+ P_QPQIC=  3.8999999999999999E-004,
+ P_QNQIC=  6.1000000000000004E-003,
+ P_QSQIC=  2.1000000000000001E-004,
+ Y1C0=  150.00000000000000     ,
+ Y2C0=  200.00000000000000     ,
+ Y3C0=  800.00000000000000     ,
+ Y4C0=  10.000000000000000     ,
+ Y5C0=  1.0000000000000000     ,
+ BP1C0=  2.0000000000000000     ,
+ Q1C0= 0.40000000000000002     ,
+ Q11C0= 0.45000000000000001     ,
+ Q21C0=  1.0000000000000000     ,
+ Q2C0=  1.0000000000000000     ,
+ Q12C0=  1.0000000000000000     ,
+ Q6C0=  150000.00000000000     ,
+ K3N0=  1.0500000000000000     ,
+ G4N0=  1.0000000000000000     ,
+ H1C0=  165.00000000000000     ,
+ H2C0=  45.000000000000000     ,
+ H3C0=  1.0000000000000000     ,
+ HNC0=  3.0000000000000000     ,
+ HAC0=  1.5000000000000000     ,
+ K1P0=  1.0000000000000000     ,
+ K11P0=  15.000000000000000     ,
+ K21P0=  7.0000000000000000     ,
+ K4N0= 0.47799999999999998     ,
+ K14N0=  3.5000000000000000     ,
+ K24N0=  2.5000000000000000     ,
+ K6R0=  1.8000000000000000     ,
+ K16R0=  5.0000000000000000     ,
+ K26R0=  5.0000000000000000     ,
+ K5S0=  80.000000000000000     ,
+ K15S0=  60.000000000000000     ,
+ D1M0=  2.4000000000000000E-002,
+ D2M0=  7.4999999999999997E-002,
+ D6M0=  2.9999999999999999E-002,
+ D7M0=  2.9999999999999999E-002,
+ D8M0=  2.9999999999999999E-002,
+ D9M0=  4.0000000000000001E-002,
+ G2O0=  100.00000000000000     ,
+ G3H0=  0.0000000000000000     ,
+ G13H0=  0.0000000000000000     ,
+ G23H0=  0.0000000000000000     ,
+ G3C0=  0.0000000000000000     ,
+ G13C0=  0.0000000000000000     ,
+ G23C0=  0.0000000000000000     ,
+ /
+        Read variables names which will be saved in netcdf-file
+        Variables selected for output
+            O2o
+            N1p
+            N3n
+            N4n
+            N5s
+            N6r
+            Nun
+            B1c
+            B1n
+            Bac
+            P1c
+            P1n
+            P2n
+            P3n
+            P4n
+            P5n
+            P6n
+            P2c
+            P3c
+            P4c
+            P5c
+            P6c
+            P1l
+            P2l
+            P3l
+            P4l
+            P5l
+            P6l
+            Pcc
+            Z2c
+            Z3c
+            Z4c
+            Z5c
+            Z6c
+            R1c
+            R1p
+            R1n
+            R1c
+            Warning: variable R1s does not exist!
+            R2c
+            R3c
+            R6c
+            R6s
+            R6p
+            R6n
+            RZc
+            Q1c
+            Q1n
+            Q1p
+            Q11c
+            Q11n
+            Q11p
+            Q6c
+            Q6s
+            Q6n
+            Q6p
+            Chla
+            H1c
+            H2c
+            H3c
+            HNc
+            Hac
+            Y1c
+            Y2c
+            Y3c
+            Y4c
+            Y5c
+            Yy3c
+            K6r
+            K16r
+            K26r
+            K5s
+            K15s
+            K3n
+            K4n
+            K13n
+            K14n
+            K24n
+            K1p
+            K11p
+            K21p
+            D1m
+            D2m
+            D6m
+            D7m
+            D8m
+            D9m
+            Dcm
+            Dfm
+            O3c
+            DIC
+            pCO2
+            CO2
+            HCO3
+            CO3
+            pH
+            Ac
+            G3h
+            G13h
+            G23h
+            G3c
+            G13c
+            G23c
+            Warning: variable G14n does not exist!
+            Acae
+            Acan
+            DICae
+            DICan
+            pHae
+            pHan
+            pCO2ae
+            pCO2an
+            PrM1p
+            PrM3n
+            PrM4n
+            PrM6r
+            PrM5s
+            Warning: variable PrQ1c does not exist!
+            PrDIC
+            PrAc
+            PrpH
+            G3h
+            G13h
+            BP1c
+            totPELn
+            totPELp
+            totPELs
+            totPELc
+            totBENn
+            totBENp
+            totBENs
+            totBENc
+            totSYSn
+            totSYSp
+            totSYSs
+            totSYSc
+            ETW
+            irrenh
+            turenh
+            R2n
+            PON
+            dry_z
+            jK25K15s
+            jK31K21p
+            jK34K24n
+            jK36K26r
+            jK13K3n
+            jG33G23h
+            jG33G23c
+            sK4K3
+            jK4K3n
+            jK3G4n
+            jG2K7o
+            qqrivR6p
+            qqrivNtn
+            qqrivNtp
+            jbotO2o
+            jbotN4n
+            jbotN3n
+            jbotN1p
+            jbotN5s
+            jbotR6c
+            jbotR6n
+            jbotR6p
+            jbotR6s
+ Warning: variable jRIY3p does not exist!
+            jbotZ2c
+            jbotP1c
+            jbotP2c
+            jbotP3c
+            jbotP4c
+            jbotP5c
+            jbotP6c
+            jbotZ3c
+            jbotZ4c
+            jbotZ5c
+            jbotZ6c
+            jbotB1c
+            jbotQ6c
+            jbotQ6n
+            jbotQ6p
+            jbotQ6s
+ Warning: variable jbott_ESS does not exist!
+            jrESS
+            rrBTo
+            rrATo
+ Warning: variable jnetPTc does not exist!
+            grsPPm2
+ Warning: variable exPPm2 does not exist!
+ Warning: variable resPPm2 does not exist!
+            jspaY3c
+            jnetBPTc
+            jnetMeZc
+            jnetMiZc
+            jnetB1c
+            jnetY3c
+            jnetYy3c
+            EIR
+            sediR2
+            jbotO3c
+            jbotO3h
+            jsurO3c
+            reBTp
+            reBTn
+            reATn
+            reATp
+            J1_PTc
+            J1_R6c
+            J1_R2c
+            jPelFishInput
+            jBenFishInput
+ Warning: variable fPZc does not exist!
+ Warning: variable fBZc does not exist!
+ Warning: variable fBO3c does not exist!
+ Warning: variable fZO3c does not exist!
+ Warning: variable fZRc does not exist!
+ Warning: variable fRBc does not exist!
+ Warning: variable fYG3c does not exist!
+ Warning: variable fYQ1c does not exist!
+ Warning: variable fQ1Yc does not exist!
+ Warning: variable fQ6Hc does not exist!
+ Warning: variable fHQ6c does not exist!
+ Warning: variable fHYc does not exist!
+ Warning: variable fHG3c does not exist!
+            pMIupZ4
+            EUWIND
+            EVWIND
+            SdTdzTh
+            BMLd
+            TMLd
+            efilP6Y3
+            Output2d_1
+            Output2d_2
+            Output2d_3
+            Output2d_4
+ Warning: variable jZ5Z2c does not exist!
+ Warning: variable jP1Z2c does not exist!
+ Warning: variable jP1ZIc does not exist!
+ Warning: variable jP6ZIc does not exist!
+ Warning: variable jPIY3n does not exist!
+ Warning: variable jPIY3p does not exist!
+            jZIY3c
+ Warning: variable jRIY3c does not exist!
+            jRIQIc
+ Warning: variable fldiPIn does not exist!
+ Warning: variable flN3PIn does not exist!
+            ruZTc
+            eO2mO2
+            XO2o
+ Warning: variable lim_rumn4 does not exist!
+ Warning: variable lim_rumn3 does not exist!
+ Warning: variable lim_rump1 does not exist!
+            ruPTc
+            jtotbenpelc
+            jtotbenpeln
+            jtotbenpelp
+            jtotbenpels
+ Warning: variable netPP does not exist!
+ Warning: Variable turenh is already selected for output in var_save
+ Warning: Variable irrenh is already selected for output in var_save
+            netPPm2
+            ESS
+            xEPS
+            Hs_out
+            Tz_out
+            u_orb_out
+            TauW
+            TauC
+ Warning: variable TauS does not exist!
+            ws_out
+            eta_out
+ Warning: variable sdMs_iiMs_ does not exist!
+ Warning: variable sunMI_iiMs_ does not exist!
+ Warning: variable sugMI_iiMs_ does not exist!
+ Warning: variable fr_lim_Ma_n_iiMca_ does not exist!
+ Warning: variable fr_lim_Ma_p_iiMca_ does not exist!
+ Warning: variable Mcac does not exist!
+ Warning: variable Mcan does not exist!
+ Warning: variable Mcap does not exist!
+ Warning: variable Mcal does not exist!
+ Warning: variable Msc does not exist!
+ Warning: variable psur_iiMs_ does not exist!
+ Warning: variable farm_surface_iiMs_ does not exist!
+ Warning: variable surface does not exist!
+            rnetPTc
+ BEGIN of READING PARMETERS
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading Param parameters..
+ #  Namelist is:
+&PARAM_PARAMETERS
+ P_SMALL=  9.9999999999999996E-081,
+ P_Q10DIFF=  1.4900000000000000     ,
+ P_QRO= 0.50000000000000000     ,
+ P_QON_DENTRI= 0.80000000000000004     ,
+ P_QON_NITRI=  2.0000000000000000     ,
+ P_CLDXM=  1.0000000000000000E-003,
+ P_1D_PORO= 0.42299999999999999     ,
+ CALCPELAGICFLAG=T,
+ CALCBENTHICFLAG=          3,
+ CALCPHYTOPLANKTON= 6*T,
+ CALCMICROZOOPLANKTON= 2*T,
+ CALCPELCHEMISTRY=T,
+ CALCMESOZOOPLANKTON= 3*T,
+ CALCBENORGANISMS= 4*T,
+ CALCSUSPENSIONFEEDERS= 4*T,
+ CALCBENBACTERIA= 2*T,F,T,
+ CALCBACTERIA=T,
+ CALCBENPHYTO=T,
+ CALCMACROPHYTO=F,
+ COMBINE_ANABAC=T,
+ ASSIGNPELBENFLUXESINBFMFLAG=T,
+ ASSIGNAIRPELFLUXESINBFMFLAG=T,
+ P_PAR= 0.50000000000000000     ,
+ CHLLIGHTFLAG=          2,
+ LIGHTFORCINGFLAG=          1,
+ USE_FUNCTION_FOR_EPS0=          1,
+ P_EPS0= 0.12000000000000000     ,
+ P_EPSESS=  1.1000000000000000E-004,
+ P_INITSINK=  100.00000000000000     ,
+ P_D_TOT= 0.29999999999999999     ,
+ P_D_TOT_2= 0.34999999403953552     ,
+ P_CLD1D2M=  5.0000000000000001E-003,
+ P_PE_R1C= 0.40000000000000002     ,
+ P_PE_R1N= 0.56000000000000005     ,
+ P_PE_R1P= 0.69999999999999996     ,
+ P_PE_R1S=  5.9999999999999998E-002,
+ P_PEZ_R1C= 0.59999999999999998     ,
+ P_PEZ_R1N= 0.71999999999999997     ,
+ P_PEZ_R1P= 0.83199999999999996     ,
+ P_EPSCHLA=  8.9999999999999993E-003,
+ P_EPSR6=  5.0000000000000004E-006,
+ P_XEFF_AN= 0.50000000000000000     ,
+ P_MAX_STATE_CHANGE=  5.0000000000000003E-002,
+ P_MAX_STATE_RATE= 0.50000000000000000     ,
+ P_QPPHC=  2.0000000000000000E-003,
+ P_QNULC=  8.9999999999999993E-003,
+ P_QR6CQ9X= 0.40000000000000002     ,
+ P_XDENSILT_K=  2798000.0000000000     ,
+ P_MDTDZ=  1.0000000000000000E-002,
+ P_SURFACE_1D=  1000000.0000000000     ,
+ CHECK_FIXED_QUOTA=          1,
+ P_DRY_BEN=T,
+ P_CHECK_TRACK=        111,
+ NAN_CHECK=T,
+ MASS_CONSERVATION_CHECK=T,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading Diffusion parameters..
+ #  Namelist is:
+&DIFFUSION_PARAMETERS
+ P_DIFF_O2O=  0.0000000000000000     ,
+ P_DIFF_N1=  3.8300000000000003E-005,
+ P_DIFF_N3=  9.7000000000000000E-005,
+ P_DIFF_N4=  1.0200000000000000E-004,
+ P_DIFF_UREA=  5.1000000000000000E-005,
+ P_DIFF_N5=  2.0699999999999998E-005,
+ P_DIFF_N6=  5.9129999999999998E-005,
+ P_DIFF_O3H=  0.0000000000000000     ,
+ P_DIFF_O3C=  0.0000000000000000     ,
+ P_DIFF_Q1=  5.0000000000000004E-006,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading WindOxReaeration_3 parameters..
+ #  Namelist is:
+&WINDOXREAERATION_3_PARAMETERS
+ P_K=  7.3999999999999996E-002,
+ P_SAF=  1.0000000000000000     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading PelGlobal parameters..
+ #  Namelist is:
+&PELGLOBAL_PARAMETERS
+ P_RRR6M=  15.000000000000000     ,
+ P_RARZM=  80.000000000000000     ,
+ P_RAR2M=  0.0000000000000000     ,
+ P_CHR2R2C=  500.00000000000000     ,
+ P_RAPIM=  180.00000000000000     ,
+ P_QHR2P1=  100.00000000000000     ,
+ P_RRPIM= 3*0.0000000000000000       , -5.0000000000000000     ,  120.00000000000000     ,  0.0000000000000000     ,
+ P_CLMIO2O= 2*20.000000000000000       ,
+ P_CLMEO2O= 3*20.000000000000000       ,
+ P_RMEM= 2*-5.0000000000000000      ,  15.000000000000000     ,
+ P_RMIM= -2.0000000000000000     , -1.0000000000000000     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading PelChem parameters..
+ #  Namelist is:
+&PELCHEM_PARAMETERS
+ P_SN4N3= 0.16000000000000000     ,
+ P_Q10N4N3=  1.0000000000000000     ,
+ P_Q10R6N5=  1.4900000000000000     ,
+ P_SOS=  0.0000000000000000     ,
+ P_CLO2O=  10.000000000000000     ,
+ P_CLN6R=  1.0000000000000000     ,
+ P_PN3O4= 0.25000000000000000     ,
+ P_SR6N5=  2.0000000000000000E-002,
+ P_CYN= 0.88200002908706665     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading PelBac parameters..
+ #  Namelist is:
+&PELBAC_PARAMETERS
+ P_VERSION=          5,
+ P_Q10=  2.0000000000000000     ,
+ P_CHDO=  15.000000000000000     ,
+ P_SD=  2.0000000000000000E-002,
+ P_SD2=  1.5000000000000000E-005,
+ P_THDO=  5.0000000000000001E-003,
+ P_SUHR1= 0.50000000000000000     ,
+ P_SULR1= 0.10000000000000001     ,
+ P_SUR2= 0.10000000000000001     ,
+ P_SUR6=  5.0000000000000001E-003,
+ P_SULR6=  5.0000000000000001E-004,
+ P_CUR6NP=  1.0500000000000000     ,
+ P_SUM=  8.3800000000000008     ,
+ P_PU_RA= 0.50000000000000000     ,
+ P_SRS=  3.0000000000000001E-003,
+ P_QUN=  48.000000000000000     ,
+ P_SUNA=  2.5000000000000001E-002,
+ P_SUNB= 0.25309999999999999     ,
+ P_QNNC= 0.75000000000000000     ,
+ P_PU_RAN=  0.0000000000000000     ,
+ P_SRSN=  5.0000000000000001E-003,
+ P_QUNNA=  24.000000000000000     ,
+ P_QUNNB=  4.0000000000000000     ,
+ P_QPC=  1.9000000000000000E-003,
+ P_QPLC=  8.4999999999999995E-004,
+ P_QNC=  1.6700000000000000E-002,
+ P_QNLC=  8.3000000000000001E-003,
+ P_QUP=  8.0000000000000000     ,
+ P_LN3N4N=  2.5000000000000001E-002,
+ P_LUREAN4N=  2.5000000000000001E-002,
+ P_LUREANAN4N=  10.000000000000000     ,
+ P_LUREANBN4N=  20.000000000000000     ,
+ P_LN1=  1.0000000000000000E-002,
+ P_XSIZE_M=  4.9999999999999998E-007,
+ P_XSIZE_C=  0.0000000000000000     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading MesoZoo parameters..
+ #  Namelist is:
+&MESOZOO_PARAMETERS
+ P_Q10= 3*2.0000000000000000       ,
+ P_SRM= 3*0.0000000000000000       ,
+ P_SRS=  1.0000000000000000E-002, 2*2.0000000000000000E-002  ,
+ P_PUPI=  0.0000000000000000     ,  1.0000000000000000     , 2*0.0000000000000000       , 0.29999999999999999     ,  1.0000000000000000     ,,
+  2*0.0000000000000000       ,  1.0000000000000000     , 7*0.0000000000000000       ,  1.0000000000000000     ,  0.0000000000000000     ,
+ P_PUMIZ=  0.0000000000000000     , 2*1.0000000000000000       , 2*0.0000000000000000       ,  1.0000000000000000     ,
+ P_PUMEZ=  1.0000000000000000     , 2*0.0000000000000000       , 2*1.0000000000000000       ,  0.0000000000000000     ,  1.0000000000000000     ,,
+  0.50000000000000000     ,  0.0000000000000000     ,
+ P_SD= 2*1.0000000000000000E-002  ,  0.0000000000000000     ,
+ P_SUM=  1.0000000000000000     ,  1.3999999999999999     ,  1.1000000000000001     ,
+ P_VUM=  8.0000000000000002E-003,  6.0000000000000001E-003,  4.0000000000000001E-003,
+ P_PUR= 3*5.0000000000000003E-002  ,
+ P_PEUPI= 3*0.34999999999999998      ,
+ P_PEUR3= 3*0.69999999999999996      ,
+ P_PEUMIZ= 0.14999999999999999     , 2*0.29999999999999999      ,
+ P_PEUMEZ= 0.14999999999999999     , 2*0.29999999999999999      ,
+ P_SMD= 2*5.0000000000000001E-004  ,  0.0000000000000000     ,
+ P_QPC= 2*1.6700000000000000E-003  ,  1.2600000000000001E-003,
+ P_QNC= 2*1.4999999999999999E-002  ,  1.6400000000000001E-002,
+ P_CLO2O= 3*30.000000000000000       ,
+ P_SW_NUT_PART= 3*1          ,
+ P_SW_FAECELPELL_SED=          0,          1,          0,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading MicroZoo parameters..
+ #  Namelist is:
+&MICROZOO_PARAMETERS
+ P_Q10= 2*2.0000000000000000       ,
+ P_SRS= 2*2.0000000000000000E-002  ,
+ P_SUM=  2.5000000000000000     ,  10.000000000000000     ,
+ P_SDO= 2*5.0000000000000003E-002  ,
+ P_SD= 2*0.0000000000000000       ,
+ P_PU_RA= 0.20000000000000001     , 0.25000000000000000     ,
+ P_PU_EA= 0.29999999999999999     , 0.34999999999999998     ,
+ P_CHRO= 2*0.20000000000000001      ,
+ P_CHUC=  20.000000000000000     ,  100.00000000000000     ,
+ P_MINFOOD= 2*10.000000000000000       ,
+ P_SUPI= 2*0.0000000000000000       , 0.32000000000000001     ,  5.0000000000000003E-002, 0.10000000000000001     , 0.50000000000000000     ,,
+  4*0.0000000000000000       , 0.32000000000000001     ,  5.0000000000000003E-002,
+ P_TYPE= 5*0          ,          2,
+ P_SUZI=  1.0000000000000000     ,  0.0000000000000000     ,  1.0000000000000000     , 0.20000000000000001     ,
+ P_SUB1= 0.10000000000000001     ,  1.0000000000000000     ,
+ P_SUBA= 0.10000000000000001     ,  1.0000000000000000     ,
+ P_QPC= 2*1.8500000000000001E-003  ,
+ P_QNC= 2*1.6700000000000000E-002  ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading Phyto parameters..
+ #  Namelist is:
+&PHYTO_PARAMETERS
+ P_Q10= 6*2.0000000000000000       ,
+ P_SUM=  3.1000000000000001     ,  4.8750000000000000     ,  5.7999999999999998     ,  2.0000000000000000     ,  3.2999999999999998     ,,
+   6.4000000000000004     ,
+ P_SRS= 5*7.4999999999999997E-002  , 0.14999999999999999     ,
+ P_SRM= 6*1.0000000000000000E-002  ,
+ P_SES= 6*0.0000000000000000       ,
+ P_SDMO=  5.0000000000000003E-002,  2.5000000000000001E-002,  1.4999999999999999E-002,  1.0000000000000000E-003,  0.0000000000000000     ,,
+  0.10000000000000001     ,
+ P_SD2= 3*0.0000000000000000       ,  6.0000000000000002E-006, 2*0.0000000000000000       ,
+ P_PU_EA=  5.0000000000000003E-002, 2*0.10000000000000001      ,  2.5000000000000001E-002,  5.0000000000000003E-002, 0.29999999999999999     ,,
+ 
+ P_PU_RA= 2*0.10000000000000001      , 0.20000000000000001     , 2*0.10000000000000001      , 0.20000000000000001     ,
+ P_QNLC= 6*6.8700000000000002E-003  ,
+ P_LQNLC= 6*9.7000000000000003E-003  ,
+ P_QPLC= 3*3.9300000000000001E-004  ,  2.7700000000000001E-004, 2*3.9300000000000001E-004  ,
+ P_QSLC=  7.0000000000000001E-003, 3*0.0000000000000000       ,  7.0000000000000001E-003,  0.0000000000000000     ,
+ P_QNRC= 6*1.2600000000000000E-002  ,
+ P_QPRC= 6*7.8620000000000003E-004  ,
+ P_QSRC=  1.4000000000000000E-002, 3*0.0000000000000000       ,  1.4000000000000000E-002,  0.0000000000000000     ,
+ P_QUN= 0.51000000000000001     ,  1.0129999999999999     ,  4.9400000000000004     , 0.20000000000000001     , 0.51000000000000001     ,,
+  0.96799999999999997     ,
+ P_QUP= 0.12000000000000000     , 0.21500000000000000     ,  1.2900000000000000     , 2*0.12000000000000000      , 0.21500000000000000     ,,
+ 
+ P_QUS= 0.50000000000000000     , 3*0.0000000000000000       , 0.50000000000000000     ,  0.0000000000000000     ,
+ P_XQN=  2.5000000000000000     , 3*2.0000000000000000       , 2*2.5000000000000000       ,
+ P_XQP= 6*2.0000000000000000       ,
+ P_XQS=  2.0000000000000000     , 3*0.0000000000000000       ,  2.0000000000000000     ,  0.0000000000000000     ,
+ P_THDO= 2*2.5000000000000001E-002  , 2*2.5000000000000001E-003  , 2*0.0000000000000000       ,
+ P_LN3N4N=  5.0000000000000000     , 0.12500000000000000     , 2*2.5000000000000001E-002  ,  5.0000000000000000     ,  15.000000000000000     ,,
+ 
+ P_LUREAN4N= 3*2.5000000000000001E-002  ,  1.0000000000000000     ,  2.2500000000000000     ,  0.0000000000000000     ,
+ P_LN1=  2.0000000000000000E-002, 2*2.0000000000000000E-003  ,  1.0000000000000000     ,  2.0000000000000000E-002,  4.0000000000000001E-002,,
+ 
+ P_CHPS= 0.29999999999999999     , 3*0.0000000000000000       , 0.29999999999999999     ,  0.0000000000000000     ,
+ P_IRI=          2, 3*1          ,          2,          3,
+ P_KE=  55.000000000000000     ,  65.000000000000000     ,  124.00000000000000     ,  116.00000000000000     ,  55.000000000000000     ,,
+   45.000000000000000     ,
+ P_SDCHL_L= 0.10000000000000001     , 3*0.20000000000000001      , 2*0.10000000000000001      ,
+ P_SDCHL_D=  6.0000000000000001E-003, 3*1.2000000000000000E-002  ,  6.0000000000000001E-003,  1.2000000000000000E-002,
+ P_CLO2O= 4*10.000000000000000       ,  2.0000000000000000     ,  10.000000000000000     ,
+ P_QCHLC=  2.0000000000000000E-002, 2*2.9999999999999999E-002  , 2*2.0000000000000000E-002  ,  8.0000000000000002E-002,
+ P_QLPLC=  2.5000000000000001E-003,  3.5000000000000001E-003,  2.5000000000000001E-003, 3*2.2499999999999998E-003  ,
+ P_XDIV= 2*1.0000000000000000       ,  2.0000000000000000     , 0.50000000000000000     ,  1.0000000000000000     ,  2.0000000000000000     ,,
+ 
+ P_XGENERIC= 5*1          ,          0,
+ P_XSIZE_M=  1.2000000000000000E-005,  3.4999999999999999E-006,  9.9999999999999995E-007,  1.5000000000000000E-005,  1.0000000000000001E-005,,
+   3.4999999999999999E-006,
+ P_XSIZE_C=  1.7999999999999999E-006,  1.0999999999999999E-008,  2.5999999999999998E-010,  5.9999999999999997E-007,  9.9999999999999995E-007,,
+   1.4000000000000000E-008,
+ P_EIR= 3*1400.0000000000000       ,  1800.0000000000000     ,  1400.0000000000000     ,  300.00000000000000     ,
+ TESTSTATUS= 6*1          ,
+ P_LIMNUT=          1,
+ P_QNR2C=  0.00000000    ,
+ /
+ alpha=(p_sum/p_qChlc/p_Ke/86400) (gC/(gChla d) umol/(m2 d)
+    0.32617845117845E-04    0.28935185185185E-04    0.18045599362804E-04    0.99776500638570E-05    0.34722222222222E-04    0.20576131687243E-04
+ alpha=(p_sum/p_qChlc/p_Ke/24 )(gC/(gChla h) umol/(m2 s)
+    0.11742424242424        0.10416666666667        0.64964157706093E-01    0.35919540229885E-01    0.12500000000000        0.74074074074074E-01
+ Max.Spec.Rate of Photosynthesis P^(chl)_m=(p_sum/p_qchl/24) (gC/gChla /h)
+     6.4583333333333         6.7708333333333         8.0555555555556         4.1666666666667         6.8750000000000         3.3333333333333    
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading Phaeo parameters..
+ #  Namelist is:
+&PHAEO_PARAMETERS
+ P_SP2P6=  1.4999999999999999E-002,
+ P_STEEP_INIT=  5.0000000000000000     ,
+ P_CMP2P6N=  1.0000000000000000E-004,
+ P_CMP2P6P= 0.29999999999999999     ,
+ P_WP6C=  1.4200000000000000E-008,
+ P_STEEP_MORT=  5.0000000000000000     ,
+ P_RSP6M=  60.000000000000000     ,
+ P_QNR3C=  2.5200000000000000E-002,
+ P_QPR3C=  0.0000000000000000     ,
+ P_CUY3A=  100.00000000000000     ,  10000.000000000000     ,
+ P_CUYY3A=  10.000000000000000     ,  1000.0000000000000     ,
+ P_CUZ4A=  10.000000000000000     ,  75.000000000000000     ,
+ P_CUZ5A=  0.0000000000000000     ,  2.0000000000000000     ,
+ P_SMXINC=  5.0000000000000003E-002,
+ P_CHNXINC=  800.00000000000000     ,
+ P_MXDEPTHM=  6.0000000000000000     ,
+ P_MSAL=  20.000000000000000     ,
+ SW_SELECT=          1,
+ SW_DETLOC=          0,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenOrganism parameters..
+ #  Namelist is:
+&BENORGANISM_PARAMETERS
+ P_Q10= 4*2.0000000000000000       ,
+ P_VUM=  0.0000000000000000     ,  5.9999999999999997E-007,  2.6100000000000000E-006,  5.9999999999999997E-007,
+ P_SU=  2.0000000000000000E-002,  5.9999999999999998E-002, 0.14399999999999999     ,  5.0000000000000003E-002,
+ P_CHU= 2*20.000000000000000       ,  150.00000000000000     ,  20.000000000000000     ,
+ P_CLU=  5.0000000000000000     ,  7.0000000000000000     ,  20.000000000000000     ,  5.0000000000000000     ,
+ P_PUE= 0.20000000000000001     , 0.22500000000000001     , 0.25000000000000000     , 0.20000000000000001     ,
+ P_PUR= 0.10000000000000001     , 0.14999999999999999     , 0.29999999999999999     , 0.12500000000000000     ,
+ P_SR=  6.9999999999999999E-004,  1.2999999999999999E-003,  6.0000000000000001E-003,  8.9999999999999998E-004,
+ P_SRA=  1.5000000000000000E-003,  3.0000000000000001E-003,  8.9999999999999993E-003,  2.7000000000000001E-003,
+ P_PUQ6= 4*0.0000000000000000       ,
+ P_PUEQ6=  0.0000000000000000     , 0.80000000000000004     , 0.40000000000000002     ,  0.0000000000000000     ,
+ P_CM= 0.10000000000000001     , 0.20000000000000001     , 0.10000000000000001     , 0.20000000000000001     ,
+ P_CLM=  0.0000000000000000     ,  2.0000000000000000E-003,  1.0000000000000000E-003,  4.0000000000000001E-003,
+ P_SD=  2.0000000000000000E-003, 2*1.0000000000000000E-003  ,  3.0000000000000001E-003,
+ P_SD2= 2*5.0000000000000003E-010  ,  4.9999999999999998E-008,  5.0000000000000003E-010,
+ P_CLO2O=  20.000000000000000     ,  0.0000000000000000     ,  20.000000000000000     ,  0.0000000000000000     ,
+ P_QN= 4*1.6400000000000001E-002  ,
+ P_QP= 4*1.2600000000000001E-003  ,
+ P_YN=  1.0000000000000000     , 3*0.0000000000000000       ,  1.0000000000000000     , 2*0.0000000000000000       ,  1.0000000000000000     ,,
+   0.0000000000000000     , 4*1.0000000000000000       , 2*0.0000000000000000       ,  1.0000000000000000     ,
+ P_SN=  1.0000000000000000     , 7*0.0000000000000000       ,
+ P_HN=  0.0000000000000000     , 2*0.25000000000000000      , 2*0.0000000000000000       , 0.25000000000000000     , 3*0.0000000000000000       ,,
+  0.25000000000000000     , 3*0.0000000000000000       , 2*5.0000000000000001E-003  ,  0.0000000000000000     ,
+ P_PN=  0.0000000000000000     , 2*0.12500000000000000      ,  0.0000000000000000     ,
+ P_XDRY=          1, 3*0          ,
+ P_XSENSO=          2,          0,          1,          0,
+ P_CLUH=  8.0000000000000000     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading FilterFeeder parameters..
+ Uptake according Holling modified response
+ Lower Threhold in food uptake is set by comparing energy gain with loss
+ #  Namelist is:
+&FILTERFEEDER_PARAMETERS
+ P_SUM= 0.78000000000000003     , 0.13000000000000000     ,
+ P_Q10= 2*2.0000000000000000       ,
+ P_R6= 2*0.0000000000000000       ,
+ P_PUPI= 4*1.0000000000000000       , 3*0.0000000000000000       , 5*1.0000000000000000       ,
+ P_PUZE= 5*0.0000000000000000       , 0.50000000000000000     ,
+ P_PUEPI= 2*0.25000000000000000      ,
+ P_PUER2= 2*0.90000000000000002      ,
+ P_PUER3= 2*0.90000000000000002      ,
+ P_PUEZI= 2*0.20000000000000001      ,
+ P_PUEZE= 2*0.20000000000000001      ,
+ P_PUER6= 2*0.69999999999999996      ,
+ P_SRS= 2*2.7000000000000001E-003  ,
+ P_SRA=  3.5999999999999997E-002,  6.0000000000000001E-003,
+ P_PUR= 2*0.12250000000000000      ,
+ P_SD=  0.0000000000000000     ,  2.7000000000000001E-003,
+ P_SD2=  0.0000000000000000     ,  5.0000000000000003E-010,
+ P_VUM=  1.1999999999999999E-003,  2.0000000000000001E-004,
+ P_CLO2O= 2*30.000000000000000       ,
+ P_HEIGHT= 2*5.0000000000000003E-002  ,
+ P_PEPEL= 2*1.0000000000000000       ,
+ P_PR6PEL= 2*0.80000000000000004      ,
+ P_PR6PELS= 2*0.80000000000000004      ,
+ P_SXRESUS= 0.10000000000000001     ,  5.9999999999999998E-002,
+ P_XTAUC= 2*50.000000000000000       ,
+ P_MAX=  5.0000000000000003E-002,
+ P_CLU=  1.0000000000000000E-002,
+ P_QNC=  1.6400000000000001E-002,
+ P_QPC=  1.2600000000000001E-003,
+ P_QCACO3Y3C=  0.0000000000000000     ,
+ P_SMYY3C=  1.2999999999999999E-002,
+ P_PYY3Z2=  1.0000000000000000     ,
+ P_XSPAWNING= 0.29999999999999999     ,
+ P_LXSPAWNING= 0.20000000000000001     ,
+ P_HEIGHTY= 0.50000000000000000     ,
+ P_FSAT_Y= 0.90000000000000002     ,
+ P_CLXTEMP=  6.0000000000000000     ,
+ P_XSTEEP=  10.000000000000000     ,
+ SW_LIM=          2,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenBac parameters..
+ #  Namelist is:
+&BENBAC_PARAMETERS
+ P_QPC=  2.0999999999999999E-003,
+ P_QLPC=  8.4999999999999995E-004,
+ P_QNC=  2.1000000000000001E-002,
+ P_QLNC=  8.3000000000000001E-003,
+ P_Q10=  2.0000000000000000     ,
+ P_SUM=  8.3800000000000008     ,
+ P_SUHR6=  1.0000000000000000E-002,
+ P_SULR6=  1.0000000000000000E-003,
+ P_SUHR1= 0.50000000000000000     ,
+ P_SULR1= 0.10000000000000001     ,
+ P_SUR2= 0.10000000000000001     ,
+ P_CUR6NP=  1.0500000000000000     ,
+ P_PUR= 0.50000000000000000     ,
+ P_SRR=  3.0000000000000001E-003,
+ P_QUN=  24.000000000000000     ,
+ P_QUP=  4.0000000000000000     ,
+ P_LN3N4N=  0.0000000000000000     ,
+ P_LUREAN4N=  1.0000000000000000     ,
+ P_SD=  2.0000000000000000E-002,
+ P_SD2=  4.4999999999999998E-007,
+ P_THDO=  5.0000000000000001E-003,
+ P_CLO2O=  20.000000000000000     , 2*-1.0000000000000000      ,
+ SW_AN=          1,
+ P_IK4=          1,          2,          3,
+ P_IK1=          1,          2,          3,
+ P_IQ1=          1,          2,          3,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenNBac parameters..
+ #  Namelist is:
+&BENNBAC_PARAMETERS
+ P_QUNB=  4.0000000000000000     ,
+ P_QUPB=  1.0000000000000000     ,
+ P_SUB= 0.25309999999999999     ,
+ P_QUNA=  24.000000000000000     ,
+ P_QUPA=  8.0000000000000000     ,
+ P_SUA=  1.6000000000000000E-002,
+ P_QNNC= 0.75000000000000000     ,
+ P_PRA=  0.0000000000000000     ,
+ P_SRA=  2.5000000000000001E-003,
+ P_SRB=  5.0000000000000001E-003,
+ P_CLO2O=  5.0000000000000000     ,
+ P_CLHCO3=  100.00000000000000     ,
+ P_QPC=  1.2500000000000000E-003,
+ P_QLPC=  6.3000000000000003E-004,
+ P_QNC=  1.6700000000000000E-002,
+ P_QLNC=  8.3000000000000001E-003,
+ P_Q10=  2.0000000000000000     ,
+ P_SD=  2.0000000000000000E-002,
+ P_SD2=  4.4999999999999999E-008,
+ P_THDO=  5.0000000000000001E-003,
+ P_LUREAN4AN=  10.000000000000000     ,
+ P_LUREAN4BN=  20.000000000000000     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading Bioturbation parameters..
+ #  Namelist is:
+&BIOTURBATION_PARAMETERS
+ P_Q10=  2.0000000000000000     ,
+ P_CHTUR=  15000.000000000000     ,
+ P_CHIRR=  15000.000000000000     ,
+ P_TURY1=  1.0000000000000000     ,
+ P_IRRY3=  1.0000000000000000E-002,
+ P_IRRY4=  1.0000000000000000     ,
+ P_ETUR=  1.9999999999999999E-006,
+ P_CTURM=  2.0000000000000000E-002,
+ P_CMTUR=  10.000000000000000     ,
+ P_CMIRR=  10.000000000000000     ,
+ P_LIMDIM=  0.0000000000000000     ,
+ SW_IRR=          3,
+ P_PU_XOXPELBEN=  4.0000000000000000     ,
+ P_XEFF_OXUPTAKE= 0.50000000000000000     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenthicReturn1 parameters..
+ #  Namelist is:
+&BENTHICRETURN1_PARAMETERS
+ P_REMINQ1C= 0.10000000000000001     ,
+ P_REMINQ1N= 0.10000000000000001     ,
+ P_REMINQ1P= 0.10000000000000001     ,
+ P_REMINQ6C=  5.0000000000000003E-002,
+ P_REMINQ6N=  5.0000000000000003E-002,
+ P_REMINQ6P=  5.0000000000000003E-002,
+ P_REMINQ6S=  5.0000000000000003E-002,
+ P_PQIN3= 0.10000000000000001     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenthicReturn2 parameters..
+ #  Namelist is:
+&BENTHICRETURN2_PARAMETERS
+ P_REMINO2= 0.10000000000000001     ,
+ P_REMINN1=  5.0000000000000001E-003,
+ P_REMINN4= 0.10000000000000001     ,
+ P_PQIN3= 0.10000000000000001     ,
+ P_REMINQ6S=  5.0000000000000003E-002,
+ P_K11K1P=  5.0000000000000001E-003,
+ P_K14K4N=  5.0000000000000001E-003,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenthicNutrient3 parameters..
+ #  Namelist is:
+&BENTHICNUTRIENT3_PARAMETERS
+ BENNUT_MESSAGES=          1,
+ SW_SPECIAL_SHIFT=          1,
+ P_PAN2NI=  6.2500000000000000E-002,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenAmmonium parameters..
+ #  Namelist is:
+&BENAMMONIUM_PARAMETERS
+ P_P=  3.0000000000000000     ,
+ P_SK4K3=  1.0000000000000000     ,
+ P_SLK4K3=  1.0000000000000000E-002,
+ P_SHK4K3=  20.000000000000000     ,
+ P_Q10=  2.0000000000000000     ,
+ P_CLO2O=  10.000000000000000     ,
+ P_CLM4N= 0.50000000000000000     ,
+ P_FLUX_AT_DEEP_END=          1,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenNitrate parameters..
+ #  Namelist is:
+&BENNITRATE_PARAMETERS
+ P_SLK3G4=  5.0000000000000001E-003,
+ P_SHK3G4=  10.000000000000000     ,
+ P_P=  0.0000000000000000     ,
+ P_CHK3N=  12.000000000000000     ,
+ P_XTHICK_D2M= 0.14999999999999999     ,
+ P_FLUX_AT_DEEP_END=          1,
+ SW_METHOD=          2,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenOxygen parameters..
+ #  Namelist is:
+&BENOXYGEN_PARAMETERS
+ P_EXSAF=  1.0000000000000000     ,
+ P_SUMD1M=  2.0000000000000000E-002,
+ P_XDAMPINGD1M=  2.0000000000000000     ,
+ P_MD1M=  5.0000000000000001E-004,
+ P_CHD1M=  5.0000000000000003E-002,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenAnoxic parameters..
+ #  Namelist is:
+&BENANOXIC_PARAMETERS
+ P_P=  0.0000000000000000     ,
+ P_Q10=  2.0000000000000000     ,
+ P_SOS=  0.0000000000000000     ,
+ P_SOS_2=  0.0000000000000000     ,
+ P_FLUX_AT_DEEP_END=          1,
+ SW_SET=          1,
+ /
+ First Order Description of reoxidation of Red.Equiv.
+ O-order input Red.Equiv derived from anoxic bact. respiration in oxic layer
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenDenitriDepth parameters..
+ #  Namelist is:
+&BENDENITRIDEPTH_PARAMETERS
+ P_PK3G4N= 0.10000000000000001     ,
+ P_CLM3N= 0.10000000000000001     ,
+ P_MD2M= 0.10000000000000001     ,
+ P_XMULTI=  2.0000000000000000     ,
+ SW_METHOD=          0,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenPhosphate parameters..
+ #  Namelist is:
+&BENPHOSPHATE_PARAMETERS
+ P_P_AN=  2.0000000000000000     ,
+ P_S_ADS=  2.0000000000000000     ,
+ P_MK1P=  5.0000000000000003E-002,
+ P_SLXCONS=  0.0000000000000000     ,
+ P_SHXCONS=  20.000000000000000     ,
+ P_FLUX_AT_DEEP_END=          1,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenSilica parameters..
+ #  Namelist is:
+&BENSILICA_PARAMETERS
+ P_CLD1M=  1.0000000000000000E-003,
+ P_CLD2M=  2.0000000000000000E-002,
+ P_CHD2M= 0.29999999999999999     ,
+ P_CLD9M=  1.4999999999999999E-002,
+ P_P_AE=  5.0000000000000000     ,
+ P_P_AN=  0.0000000000000000     ,
+ P_SMQ6=  2.0000000000000000E-002,
+ P_S_ADS=  2.0000000000000000     ,
+ P_CHM5S=  600.00000000000000     ,
+ P_CVM5S=  400.00000000000000     ,
+ P_Q10=  2.0000000000000000     ,
+ P_FLUX_AT_DEEP_END=          1,
+ P_SUL=  1.0000000000000000E-008,
+ P_LXRS=  1.0000000000000000     ,
+ SW_METHOD=          1,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenQ1Transport parameters..
+ #  Namelist is:
+&BENQ1TRANSPORT_PARAMETERS
+ P_P=  0.0000000000000000     ,
+ P_SLQ1=  1.0000000000000000E-003,
+ P_SHQ1=  5.0000000000000000     ,
+ P_PXTR=  1.0000000000000000E-003,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading Settling parameters..
+ #  Namelist is:
+&SETTLING_PARAMETERS
+ P_BURVEL_R6CNP=  4.0000000000000001E-002,
+ P_BURVEL_R6S=  4.0000000000000001E-002,
+ P_BURVEL_PI= 4*0.0000000000000000       , 0.50000000000000000     ,  0.0000000000000000     ,
+ P_SMRZ= 0.50000000000000000     ,
+ P_HEIGHT= 0.10000000000000001     ,
+ P_XRESUSQ6=  1.0000000000000000     ,
+ P_XLIMDM=  1.0000000000000000     ,
+ P_HDQ6M=  30.000000000000000     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading ControlBenPartNutrientBuffers parameters..
+ #  Namelist is:
+&CONTROLBENPARTNUTRIENTBUFFERS_PARAMETERS
+ P_RN=  1.0000000000000000E-002,
+ P_S=  5.0000000000000001E-003,
+ P_REFILL_TIME=  60.000000000000000     ,
+ P_CONTROL_N=F,
+ P_CONTROL_P=F,
+ P_CONTROL_S=F,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenCO2Transport parameters..
+ #  Namelist is:
+&BENCO2TRANSPORT_PARAMETERS
+ P_P=  0.0000000000000000     ,
+ P_FLUX_AT_DEEP_END=          0,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenAlkalinity parameters..
+ #  Namelist is:
+&BENALKALINITY
+ P_P=  0.0000000000000000     ,
+ P_FLUX_AT_DEEP_END=          1,
+ FLAG_AE_RESET=          1,
+ FLAG_AN_RESET=          1,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading CO2 parameters..
+ #  Namelist is:
+&CO2_PARAMETERS
+ METHODCALCCO2=          2,
+ PCO2_AIR=  3.6499999999999998E-004,
+ P_QHK4K3N=  1.0000000000000000     ,
+ P_QHATO= 0.50000000000000000     ,
+ P_QHK3G4N= 0.50000000000000000     ,
+ /
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading Silt parameters..
+ #  Namelist is:
+&SILT_PARAMETERS
+ METHOD=          4,
+ P_SAMPLEDEPTH=  9.9999997764825821E-003,
+ STICK_FACT= 0.25000000000000000     ,
+ /
+ PelBoxAbove;           1
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #  Reading BenPhyto parameters..
+ #  Namelist is:
+&BENPHYTO_PARAMETERS
+ P_USEPARAMS=          5,
+ P_XRESUS=  1.0000000000000000     ,
+ P_XLADM=  9.4999999999999998E-003,
+ P_HBPC=  7950000.0000000000     ,
+ P_PX_SILT_IN_PW= 0.10000000000000001     ,
+ P_MXSILTBPC=  2000.00000    ,
+ SW_PRECISION=          1,
+ /
+ END of READING PARMETERS
+ ppBac Transported?           5          11          20
+ p-poro  0.42299999999999999     
+ initial value DfmDcm=   9.9999997473787516E-005   9.9999997473787516E-005
+ Dlm=   9.9999997294297860E-005
+ bphyto    2.5200000000000000E-002   2.0000000000000000     
+        Pelagic-Benthic coupled setup (bio_setup=3)
+            Benthic model is: benthos + Ruardij & Van Raaphorst
+ Depth(1) calc_init_bennut_states=   1.1031119992992453                0
+            init silt
+        done.
+ ------------------------------------------------------------------------
+    saving initial conditions
+ Processing output category /state:
+   - temp
+   - salt
+   - u
+   - uo
+   - v
+   - vo
+   - u_taubo
+   - xP
+   - h
+   - ho
+   - num
+   - nuh
+   - nus
+   - tke
+   - tkeo
+   - eps
+ ------------------------------------------------------------------------
+    time_loop
+           0 %
+ bio_solver numc=          56
+ bio_solver nlev=          40
+ bio_solver dt=   300.00000000000000     
+ bio_solver solver=           1
+ Start of run..........follow=     2441318
+            Vertical advective transport is present for
+                R9x defined outside PelGlobal.F90
+                R9x Diffusive transport coupled to advective transport
+                B1c
+                B1n coupled to B1c
+                B1p coupled to B1c
+                Bac coupled to B1c
+                P1c
+                P1n coupled to P1c
+                P1p coupled to P1c
+                P1l coupled to P1c
+                P1s coupled to P1c
+                P2c
+                P2n coupled to P2c
+                P2p coupled to P2c
+                P2l coupled to P2c
+                P3c
+                P3n coupled to P3c
+                P3p coupled to P3c
+                P3l coupled to P3c
+                P4c
+                P4n coupled to P4c
+                P4p coupled to P4c
+                P4l coupled to P4c
+                P5c
+                P5n coupled to P5c
+                P5p coupled to P5c
+                P5l coupled to P5c
+                P5s coupled to P5c
+                P6c
+                P6n coupled to P6c
+                P6p coupled to P6c
+                P6l coupled to P6c
+                Pcc coupled to P6c
+                R2c
+                R2n coupled to R2c
+                R3c coupled to P6c
+                R6c
+                R6n coupled to R6c
+                R6p coupled to R6c
+                R6s
+                RZc
+                Z3c
+                Z4c
+                Z2c
+                Z5c
+                Z6c
+            End of Vertical transport
+             
+        Saving....1972-01-02 00:00:00
+        Saving....1972-01-03 00:00:00
+        Saving....1972-01-04 00:00:00
+        Saving....1972-01-05 00:00:00
+        Saving....1972-01-06 00:00:00
+        Saving....1972-01-07 00:00:00
+        Saving....1972-01-08 00:00:00
+        Saving....1972-01-09 00:00:00
+        Saving....1972-01-10 00:00:00
+        Saving....1972-01-11 00:00:00
+        Saving....1972-01-12 00:00:00
+        Saving....1972-01-13 00:00:00
+        Saving....1972-01-14 00:00:00
+        Saving....1972-01-15 00:00:00
+        Saving....1972-01-16 00:00:00
+        Saving....1972-01-17 00:00:00
+        Saving....1972-01-18 00:00:00
+        Saving....1972-01-19 00:00:00
+        Saving....1972-01-20 00:00:00
+        Saving....1972-01-21 00:00:00
+        Saving....1972-01-22 00:00:00
+        Saving....1972-01-23 00:00:00
+        Saving....1972-01-24 00:00:00
+        Saving....1972-01-25 00:00:00
+        Saving....1972-01-26 00:00:00
+        Saving....1972-01-27 00:00:00
+        Saving....1972-01-28 00:00:00
+        Saving....1972-01-29 00:00:00
+        Saving....1972-01-30 00:00:00
+        Saving....1972-01-31 00:00:00
+        Saving....1972-02-01 00:00:00
+        Saving....1972-02-02 00:00:00
+        Saving....1972-02-03 00:00:00
+        Saving....1972-02-04 00:00:00
+        Saving....1972-02-05 00:00:00
+        Saving....1972-02-06 00:00:00
+        Saving....1972-02-07 00:00:00
+        Saving....1972-02-08 00:00:00
+        Saving....1972-02-09 00:00:00
+        Saving....1972-02-10 00:00:00
+        Saving....1972-02-11 00:00:00
+        Saving....1972-02-12 00:00:00
+        Saving....1972-02-13 00:00:00
+        Saving....1972-02-14 00:00:00
+        Saving....1972-02-15 00:00:00
+        Saving....1972-02-16 00:00:00
+        Saving....1972-02-17 00:00:00
+        Saving....1972-02-18 00:00:00
+        Saving....1972-02-19 00:00:00
+        Saving....1972-02-20 00:00:00
+        Saving....1972-02-21 00:00:00
+        Saving....1972-02-22 00:00:00
+        Saving....1972-02-23 00:00:00
+        Saving....1972-02-24 00:00:00
+        Saving....1972-02-25 00:00:00
+        Saving....1972-02-26 00:00:00
+        Saving....1972-02-27 00:00:00
+        Saving....1972-02-28 00:00:00
+        Saving....1972-02-29 00:00:00
+        Saving....1972-03-01 00:00:00
+        Saving....1972-03-02 00:00:00
+        Saving....1972-03-03 00:00:00
+        Saving....1972-03-04 00:00:00
+        Saving....1972-03-05 00:00:00
+        Saving....1972-03-06 00:00:00
+        Saving....1972-03-07 00:00:00
+        Saving....1972-03-08 00:00:00
+        Saving....1972-03-09 00:00:00
+        Saving....1972-03-10 00:00:00
+        Saving....1972-03-11 00:00:00
+        Saving....1972-03-12 00:00:00
+        Saving....1972-03-13 00:00:00
+        Saving....1972-03-14 00:00:00
+        Saving....1972-03-15 00:00:00
+        Saving....1972-03-16 00:00:00
+        Saving....1972-03-17 00:00:00
+        Saving....1972-03-18 00:00:00
+        Saving....1972-03-19 00:00:00
+        Saving....1972-03-20 00:00:00
+        Saving....1972-03-21 00:00:00
+        Saving....1972-03-22 00:00:00
+        Saving....1972-03-23 00:00:00
+        Saving....1972-03-24 00:00:00
+        Saving....1972-03-25 00:00:00
+        Saving....1972-03-26 00:00:00
+        Saving....1972-03-27 00:00:00
+        Saving....1972-03-28 00:00:00
+        Saving....1972-03-29 00:00:00
+        Saving....1972-03-30 00:00:00
+        Saving....1972-03-31 00:00:00
+        Saving....1972-04-01 00:00:00
+        Saving....1972-04-02 00:00:00
+        Saving....1972-04-03 00:00:00
+        Saving....1972-04-04 00:00:00
+        Saving....1972-04-05 00:00:00
+        Saving....1972-04-06 00:00:00
+        Saving....1972-04-07 00:00:00
+        Saving....1972-04-08 00:00:00
+        Saving....1972-04-09 00:00:00
+        Saving....1972-04-10 00:00:00
+        Saving....1972-04-11 00:00:00
+        Saving....1972-04-12 00:00:00
+        Saving....1972-04-13 00:00:00
+        Saving....1972-04-14 00:00:00
+        Saving....1972-04-15 00:00:00
+        Saving....1972-04-16 00:00:00
+        Saving....1972-04-17 00:00:00
+        Saving....1972-04-18 00:00:00
+        Saving....1972-04-19 00:00:00
+        Saving....1972-04-20 00:00:00
+        Saving....1972-04-21 00:00:00
+        Saving....1972-04-22 00:00:00
+        Saving....1972-04-23 00:00:00
+        Saving....1972-04-24 00:00:00
+        Saving....1972-04-25 00:00:00
+        Saving....1972-04-26 00:00:00
+        Saving....1972-04-27 00:00:00
+        Saving....1972-04-28 00:00:00
+        Saving....1972-04-29 00:00:00
+        Saving....1972-04-30 00:00:00
+        Saving....1972-05-01 00:00:00
+        Saving....1972-05-02 00:00:00
+        Saving....1972-05-03 00:00:00
+        Saving....1972-05-04 00:00:00
+        Saving....1972-05-05 00:00:00
+        Saving....1972-05-06 00:00:00
+        Saving....1972-05-07 00:00:00
+        Saving....1972-05-08 00:00:00
+        Saving....1972-05-09 00:00:00
+        Saving....1972-05-10 00:00:00
+        Saving....1972-05-11 00:00:00
+        Saving....1972-05-12 00:00:00
+        Saving....1972-05-13 00:00:00
+        Saving....1972-05-14 00:00:00
+        Saving....1972-05-15 00:00:00
+        Saving....1972-05-16 00:00:00
+        Saving....1972-05-17 00:00:00
+        Saving....1972-05-18 00:00:00
+        Saving....1972-05-19 00:00:00
+        Saving....1972-05-20 00:00:00
+        Saving....1972-05-21 00:00:00
+        Saving....1972-05-22 00:00:00
+        Saving....1972-05-23 00:00:00
+        Saving....1972-05-24 00:00:00
+        Saving....1972-05-25 00:00:00
+        Saving....1972-05-26 00:00:00
+        Saving....1972-05-27 00:00:00
+        Saving....1972-05-28 00:00:00
+        Saving....1972-05-29 00:00:00
+        Saving....1972-05-30 00:00:00
+        Saving....1972-05-31 00:00:00
+        Saving....1972-06-01 00:00:00
+        Saving....1972-06-02 00:00:00
+        Saving....1972-06-03 00:00:00
+        Saving....1972-06-04 00:00:00
+        Saving....1972-06-05 00:00:00
+        Saving....1972-06-06 00:00:00
+        Saving....1972-06-07 00:00:00
+        Saving....1972-06-08 00:00:00
+        Saving....1972-06-09 00:00:00
+        Saving....1972-06-10 00:00:00
+        Saving....1972-06-11 00:00:00
+        Saving....1972-06-12 00:00:00
+        Saving....1972-06-13 00:00:00
+        Saving....1972-06-14 00:00:00
+        Saving....1972-06-15 00:00:00
+        Saving....1972-06-16 00:00:00
+        Saving....1972-06-17 00:00:00
+        Saving....1972-06-18 00:00:00
+        Saving....1972-06-19 00:00:00
+        Saving....1972-06-20 00:00:00
+        Saving....1972-06-21 00:00:00
+        Saving....1972-06-22 00:00:00
+        Saving....1972-06-23 00:00:00
+        Saving....1972-06-24 00:00:00
+        Saving....1972-06-25 00:00:00
+        Saving....1972-06-26 00:00:00
+        Saving....1972-06-27 00:00:00
+        Saving....1972-06-28 00:00:00
+        Saving....1972-06-29 00:00:00
+        Saving....1972-06-30 00:00:00
+        Saving....1972-07-01 00:00:00
+        Saving....1972-07-02 00:00:00
+        Saving....1972-07-03 00:00:00
+        Saving....1972-07-04 00:00:00
+        Saving....1972-07-05 00:00:00
+        Saving....1972-07-06 00:00:00
+        Saving....1972-07-07 00:00:00
+        Saving....1972-07-08 00:00:00
+        Saving....1972-07-09 00:00:00
+        Saving....1972-07-10 00:00:00
+        Saving....1972-07-11 00:00:00
+        Saving....1972-07-12 00:00:00
+        Saving....1972-07-13 00:00:00
+        Saving....1972-07-14 00:00:00
+        Saving....1972-07-15 00:00:00
+        Saving....1972-07-16 00:00:00
+        Saving....1972-07-17 00:00:00
+        Saving....1972-07-18 00:00:00
+        Saving....1972-07-19 00:00:00
+        Saving....1972-07-20 00:00:00
+        Saving....1972-07-21 00:00:00
+        Saving....1972-07-22 00:00:00
+        Saving....1972-07-23 00:00:00
+        Saving....1972-07-24 00:00:00
+        Saving....1972-07-25 00:00:00
+        Saving....1972-07-26 00:00:00
+        Saving....1972-07-27 00:00:00
+        Saving....1972-07-28 00:00:00
+        Saving....1972-07-29 00:00:00
+        Saving....1972-07-30 00:00:00
+        Saving....1972-07-31 00:00:00
+        Saving....1972-08-01 00:00:00
+        Saving....1972-08-02 00:00:00
+        Saving....1972-08-03 00:00:00
+        Saving....1972-08-04 00:00:00
+        Saving....1972-08-05 00:00:00
+        Saving....1972-08-06 00:00:00
+        Saving....1972-08-07 00:00:00
+        Saving....1972-08-08 00:00:00
+        Saving....1972-08-09 00:00:00
+        Saving....1972-08-10 00:00:00
+        Saving....1972-08-11 00:00:00
+        Saving....1972-08-12 00:00:00
+        Saving....1972-08-13 00:00:00
+        Saving....1972-08-14 00:00:00
+        Saving....1972-08-15 00:00:00
+        Saving....1972-08-16 00:00:00
+        Saving....1972-08-17 00:00:00
+        Saving....1972-08-18 00:00:00
+        Saving....1972-08-19 00:00:00
+        Saving....1972-08-20 00:00:00
+        Saving....1972-08-21 00:00:00
+        Saving....1972-08-22 00:00:00
+        Saving....1972-08-23 00:00:00
+        Saving....1972-08-24 00:00:00
+        Saving....1972-08-25 00:00:00
+        Saving....1972-08-26 00:00:00
+        Saving....1972-08-27 00:00:00
+        Saving....1972-08-28 00:00:00
+        Saving....1972-08-29 00:00:00
+        Saving....1972-08-30 00:00:00
+        Saving....1972-08-31 00:00:00
+        Saving....1972-09-01 00:00:00
+        Saving....1972-09-02 00:00:00
+        Saving....1972-09-03 00:00:00
+        Saving....1972-09-04 00:00:00
+        Saving....1972-09-05 00:00:00
+        Saving....1972-09-06 00:00:00
+        Saving....1972-09-07 00:00:00
+        Saving....1972-09-08 00:00:00
+        Saving....1972-09-09 00:00:00
+        Saving....1972-09-10 00:00:00
+        Saving....1972-09-11 00:00:00
+        Saving....1972-09-12 00:00:00
+        Saving....1972-09-13 00:00:00
+        Saving....1972-09-14 00:00:00
+        Saving....1972-09-15 00:00:00
+        Saving....1972-09-16 00:00:00
+        Saving....1972-09-17 00:00:00
+        Saving....1972-09-18 00:00:00
+        Saving....1972-09-19 00:00:00
+        Saving....1972-09-20 00:00:00
+        Saving....1972-09-21 00:00:00
+        Saving....1972-09-22 00:00:00
+        Saving....1972-09-23 00:00:00
+        Saving....1972-09-24 00:00:00
+        Saving....1972-09-25 00:00:00
+        Saving....1972-09-26 00:00:00
+        Saving....1972-09-27 00:00:00
+        Saving....1972-09-28 00:00:00
+        Saving....1972-09-29 00:00:00
+        Saving....1972-09-30 00:00:00
+        Saving....1972-10-01 00:00:00
+        Saving....1972-10-02 00:00:00
+        Saving....1972-10-03 00:00:00
+        Saving....1972-10-04 00:00:00
+        Saving....1972-10-05 00:00:00
+        Saving....1972-10-06 00:00:00
+        Saving....1972-10-07 00:00:00
+        Saving....1972-10-08 00:00:00
+        Saving....1972-10-09 00:00:00
+        Saving....1972-10-10 00:00:00
+        Saving....1972-10-11 00:00:00
+        Saving....1972-10-12 00:00:00
+        Saving....1972-10-13 00:00:00
+        Saving....1972-10-14 00:00:00
+        Saving....1972-10-15 00:00:00
+        Saving....1972-10-16 00:00:00
+        Saving....1972-10-17 00:00:00
+        Saving....1972-10-18 00:00:00
+        Saving....1972-10-19 00:00:00
+        Saving....1972-10-20 00:00:00
+        Saving....1972-10-21 00:00:00
+        Saving....1972-10-22 00:00:00
+        Saving....1972-10-23 00:00:00
+        Saving....1972-10-24 00:00:00
+        Saving....1972-10-25 00:00:00
+        Saving....1972-10-26 00:00:00
+        Saving....1972-10-27 00:00:00
+        Saving....1972-10-28 00:00:00

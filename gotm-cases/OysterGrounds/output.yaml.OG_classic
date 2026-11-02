@@ -1,0 +1,42 @@
+OysterGrounds:
+   time_unit: dt
+   time_step: 288
+   variables:
+      - source: zeta
+      - source: sst
+      - source: sss
+      - source: u10
+      - source: v10
+      - source: heat
+      - source: int_swr
+      - source: int_heat
+      - source: int_total
+      - source: precip
+      - source: evap
+      - source: u_taus
+      - source: u_taub
+      - source: h
+      - source: u
+      - source: v
+      - source: salt
+      - source: temp
+      - source: SS
+      - source: NN
+      - source: num
+      - source: nuh
+      - source: nus
+      - source: gamu
+      - source: gamv
+      - source: gamh
+      - source: gams
+      - source: tke
+      - source: kb
+      - source: eps
+      - source: epsb
+      - source: P
+      - source: G
+      - source: Pb
+ 
+
+
+

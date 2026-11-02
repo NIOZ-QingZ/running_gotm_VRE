@@ -1,0 +1,15 @@
+
+&ice
+   ice_method=0,
+   ks=0,
+   alb_sno=0,
+   alb_ice=0,
+   pen_ice=0,
+   opt_dep_ice=0,
+   opt_ext_ice=0,
+   opt_ext_snow=0,
+   t_range_melt=0,
+   h_lo_lim=0,
+   kmelt=0,
+   t_range_dhdt=0,
+/

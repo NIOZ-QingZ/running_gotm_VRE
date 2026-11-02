@@ -1,0 +1,18 @@
+!$Id: kd.inp, 05-2006, JvdM Exp $
+!------------------------------------------
+! kd calculation
+!
+!------------------------------------------
+&kd_nml
+  spm_kd_method  =3,        ! switch: 1= bulk power law, 2= Baker & Lavelle (1984), 3= bulk polynomial
+  pow_a          =0.7,        ! multiplication factor power law
+  pow_b          =0.94,        ! exponent power law
+  pol_a          =0.11 !0.1106,        ! multiplication factor polynomial
+  pol_b          =0.0 !0.2131,        ! constant of polynomial
+  nshade         =2         ! sizes 1-nshade will be used for polynomial kd calculation
+  m              =1.2,      ! relative index of refraction, B&L
+  lambda         =550.0E-9, ! representative wave length for PAR [m], B&L
+!  rhos           =2650,     ! gravitational density of sediment [kg/m^3], B&L
+  eps_sphere     =0.035,    ! sphericity factor particles 
+                            ! (0<eps<=1: 1=round; 0=flat), B&L
+/

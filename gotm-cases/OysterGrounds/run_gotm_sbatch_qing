@@ -1,0 +1,13 @@
+#!/bin/sh
+#SBATCH --partition=normal --qos=normal
+##SBATCH --partition=LMEM --qos=normal
+#SBATCH --nodes=1
+##SBATCH --nodelist=no61,no63,no64,no66
+#SBATCH --ntasks-per-node=1
+##SBATCH --mem-bind="local" SBATCH --exclusive
+#SBATCH --time=0-18:00:00 SBATCH --mem=512MB SBATCH --output=/export/lv9/user/qzhan/run_gotm.stdout SBATCH --job-name="run_gotm"
+
+module load singularity 
+singularity exec ~/Singularity_containers/getm-wad-container.sif ./run_gotm_batch_qing
+# --nv (GPU)
+# -B

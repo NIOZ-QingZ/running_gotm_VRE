@@ -1,0 +1,101 @@
+# run script for GOTM-BFM
+# SvL - 02-04-2009
+
+echo "*****************************"
+echo "Starting GOTM-BFM run"
+
+#export GOTMDIR=/home/jv02/GETM_ERSEM_SOURCES/gotm_ersem_sept2014/gotm-4.1.0.couple/
+export GOTMDIR=/home/jv02/GETM_ERSEM_SOURCES/gotm_ersem_15dec2014/gotm-4.1.0.couple/
+
+rm log.out
+
+run_dir=`pwd`
+export out_dir=../
+export out_dir=/bigdata2/jv02/copy_data1/gotm-cases
+ext=".nc"
+
+#----------------------------------
+# !!!! make sure start and stop time match those set in gotmrun.nml !!!
+#export start="1958-01-01 12:00:00"
+#export stop="1958-03-31 12:00:00"
+#export start="2002-09-01 18:00:00"
+export start="2006-01-01 12:00:00"
+export stop="2007-12-31 12:00:00"
+#export start="2007-01-01 12:00:00"
+#export stop="2007-01-31 12:00:00"
+#export stop="2008-12-31 12:00:00"
+#export stop="2099-11-30 12:00:00"
+export dt=6.
+
+export out_fn="OGecmwf"  # run ID
+#export out_fn="OGclimaterun"  # run ID
+# choose site from lp (liverpool bay), og (oyster grounds), wg (west gabbard),
+#                  nd (north dogger),sb (southern bight=sean gas field)
+export site_id='og'  # should be in lower case
+#----------------------------------
+
+
+filename=$out_fn$ext
+echo 'Run set from ' $start ' to ' $stop
+
+# CPU timing of run
+t1=`date +%s`
+
+# copy nml and imp files to ouput directory
+echo 'copying input files to ' $out_dir/$out_fn
+mkdir $out_dir/$out_fn 
+mkdir $out_dir/$out_fn/plots 
+cp $run_dir/*.inp $out_dir/$out_fn/ 
+tar -zcf nml.tgz *.nml
+cp $run_dir/nml.tgz $out_dir/$out_fn/
+rm $run_dir/nml.tgz
+
+# create tidal input series --> depends on start and end time
+echo 'Starting tidal calculation'
+#cp ../calc_GOTM_tidalforcing_3.F90 .
+#rm calc_GOTM_tidalforcing_3.x
+#ifort calc_GOTM_tidalforcing_3.F90 -o calc_GOTM_tidalforcing_3.x
+./calc_GOTM_tidalforcing_5.x >& tidal.out 
+
+# actual run
+echo 'Starting GOTM-BFM'
+#./gotm >& log.out	#./gotm isn't the file compiled by MAKE on cluster - see next line
+echo $GOTMDIR
+$GOTMDIR/src/gotm_prod_IFORT13 >& log.out
+#$GOTMDIR/src/gotm_debug_IFORT13 >& log.out
+#$GOTMDIR/src/gotm_debug_IFORT13 >& log.out
+#nice -15 /home/jv02/gotm_bfm_ssbgc/gotm-4.1.0.couple/src/gotm_prod_IFORT11 >& log.out
+OKready=`tail -20 log.out | grep "Sim-time/CPU-time"`
+
+if [ -n "$OKready" ] ; then
+  echo " GOTM-BFM made it ..."
+
+  #timing of run
+  t2=`date +%s`  
+  echo $t2-$t1 > $$.tmp
+  wall=`bc < $$.tmp`
+  rm -f $$.tmp
+  echo "wall clock time: "$wall" secs" 
+  echo "wall clock time: "$wall" secs" >> log.out 2>&1
+  
+  # copy output files and log file
+  echo 'copying output files to ' $out_dir/$out_fn
+  mv $out_dir/$filename $out_dir/$out_fn/
+  cp $run_dir/log.out $out_dir/$out_fn/
+  cp $run_dir/tidal.out $out_dir/$out_fn/
+  cp $run_dir/zeta.dat $out_dir/$out_fn/
+  cp $run_dir/pressure.dat $out_dir/$out_fn/
+  rm $run_dir/zeta.dat
+  rm $run_dir/pressure.dat
+  rm $run_dir/log.out 
+  rm $run_dir/tidal.out 
+  #rm $run_dir/calc_GOTM_tidalforcing_3.x
+  #rm $run_dir/calc_GOTM_tidalforcing_3.F90
+
+  echo "GOTM-BFM run finished!"
+fi
+if [ -z "$OKready" ] ; then
+  echo " GOTM-BFM run FAILED"
+fi
+echo "*****************************"
+

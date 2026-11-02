@@ -1,0 +1,156 @@
+*****************************
+Starting GOTM-BFM run
+Run set from  1958-01-01 00:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 29348 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************
+*****************************
+Starting GOTM-BFM run
+rm: cannot remove `log.out': No such file or directory
+Run set from  1958-01-01 00:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 29363 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************
+*****************************
+Starting GOTM-BFM run
+rm: cannot remove `log.out': No such file or directory
+Run set from  1958-01-01 00:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM run FAILED
+*****************************
+*****************************
+Starting GOTM-BFM run
+Run set from  2002-09-01 18:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 3980 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************
+*****************************
+Starting GOTM-BFM run
+rm: cannot remove `log.out': No such file or directory
+Run set from  2002-09-01 18:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 3685 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************
+*****************************
+Starting GOTM-BFM run
+rm: cannot remove `log.out': No such file or directory
+Run set from  1958-01-01 00:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 29584 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************
+*****************************
+Starting GOTM-BFM run
+rm: cannot remove `log.out': No such file or directory
+Run set from  1958-01-01 00:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM run FAILED
+*****************************
+*****************************
+Starting GOTM-BFM run
+Run set from  2002-09-01 18:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 3761 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************
+*****************************
+Starting GOTM-BFM run
+rm: cannot remove `log.out': No such file or directory
+Run set from  2002-09-01 18:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 3668 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************
+*****************************
+Starting GOTM-BFM run
+rm: cannot remove `log.out': No such file or directory
+Run set from  1958-01-01 00:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 29285 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************
+*****************************
+Starting GOTM-BFM run
+rm: cannot remove `log.out': No such file or directory
+Run set from  1958-01-01 00:00:00  to  2008-12-31 00:00:00
+copying input files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf': File exists
+mkdir: cannot create directory `/fs3/jvandermolen/active_runs/gotm//OGecmwf/plots': File exists
+Starting tidal calculation
+Starting GOTM-BFM
+/fs3/jvandermolen/GETM_ERSEM_SOURCES/gotm_ersem_1jun2016/gotm-4.1.0.couple/
+ GOTM-BFM made it ...
+wall clock time: 29532 secs
+copying output files to  /fs3/jvandermolen/active_runs/gotm//OGecmwf
+GOTM-BFM run finished!
+*****************************

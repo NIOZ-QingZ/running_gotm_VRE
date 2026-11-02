@@ -1,0 +1,73 @@
+!$Id$
+!-------------------------------------------------------------------------------
+! Sediment calculation
+!
+! spm_calc:	logical
+! nclass:	number of grain size fractions
+! spm_mode:     1: read from file; 2: calculate using advection/diffusion
+!               3: simple SPM model
+! C_initial:    initial concentration, units??
+! grainsize:    grain size of sediment [m]
+! rho_s:        density of sediment [kg/m3]
+! dd_mode:      deposition function: 0: none; 1: proportional to ws
+! pp_mode:      pickup function: 0: none; 1: pickup through ref. conc. 
+!                2: analytical pickup for coarse fractions
+!                3: alternative for testing
+!                4: alternative for testing
+! a_d:          proportionality constant deposition function
+! a_p:          proportionality constant pickup function
+! tau_mode:     method to compute combined wave-current shear stress
+!               1: linear addition, 2: Soulsby method
+! tauc_mode:    method to compute current shear stress. 1:  Soulsby method
+! tauw_mode:    method to compute wave shear stress: 1:  Soulsby method
+! sd_mode:      sediment diffusivity: 1: linear, 2: parabolic (Rouse profile)
+! refconc_mode  reference concentration: 1: Smith & McLean (1977)
+! taucrit_mode  include critical shear stress (1) or not (0)
+! cnpar:        
+! w_adv_discr:  advection method - see .../src/utils/ode_solvers.F90
+! solver:	which ode-solver to use - see .../src/utils/ode_solvers.F90
+! wave_mode:    0: as defined in observations.F90
+!               1: calculate using JONSWAP equilibrium method
+!-----------------------------------------------------------------------------
+&spm_nml
+  spm_calc=.true.
+  nclass=4
+!  nclass=2
+  spm_mode=2
+  C_initial=0.003
+!  grainsize=3E-6, 20E-6, 45E-6, 250E-6 !, 125E-6 !10E-6, 55E-6, !75E-6,
+!coarsegridbott  grainsize=5E-6, 31E-6, 250E-6 !, 125E-6 !10E-6, 55E-6, !75E-6,
+  grainsize=10E-6, 31E-6, 60E-6, 250E-6 !settings paper 1
+!  grainsize=45E-6, 250E-6 !settings paper 1
+!  grainsize=10E-6, 31E-6, 100E-6, 250E-6 
+  rho_s=2650, 2650, 2650, 2650,
+  dd_mode=1
+  pp_mode=2
+  a_d=1.0, 1.0, 1.0, 1.0      !0.7, 1.0, !1.0,   !0.1
+!  a_p=0.00005, 0.002, 0.06, 1.0 !, 0.0, 1.0      !0.00014, 0.01, !0.01, !0.01
+! coarsegridbott  a_p=0.00004, 0.01, 1.0 !, 0.0, 1.0      !0.00014, 0.01, !0.01, !0.01
+!  a_p=0.10, 1.0                  !2 grain size example
+!  a_p=0.005, 0.1, 0.5, 1.0  !settings paper 2, with active bed, second corr
+!  a_p=0.005, 0.08, 0.35, 1.0  !settings paper 2, with active bed, second corr
+!  a_p=0.005, 0.09, 0.45, 1.0  !settings paper 2, with active bed, second corr
+!  a_p=0.005, 0.085, 0.47, 1.0  !settings paper 2, with active bed, second corr
+!  a_p=0.0045, 0.083, 0.46, 1.0  !settings paper 2, with active bed, second corr
+!  a_p=0.0011, 0.006, 0.08, 1.0  !settings paper 2, with active bed, first corr
+  a_p=0.0011, 0.008, 0.14, 1.0  !settings paper 2, with active bed
+!  a_p=0.0001, 0.005, 0.03, 1.0  !settings paper 1, simulated coarse fraction
+!  a_p=0.00005, 0.002, 0.01, 1.0  !middelste naar 0.0015
+!  a_p=0.001, 0.01, 0.8, 1.0 !, 0.0, 1.0      !0.00014, 0.01, !0.01, !0.01
+! 5E-6,0.00006 go on with 5 if wc interaction does not work
+  tau_mode=2
+  tauc_mode=1
+  tauw_mode=1
+  sd_mode=2
+  refconc_mode=1
+  taucrit_mode=0
+  cnpar=0.6
+  w_adv_discr=5
+  solver=1
+  wave_mode=1
+/
+
+!  w_C=        -0.0001, -0.001, !-0.001,
