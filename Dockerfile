@@ -195,10 +195,10 @@ RUN --mount=type=ssh \
 RUN mkdir -p /opt/home/build/gotm
 RUN mkdir -p /opt/tools/getm/build
 
-#COPY dws_200m /opt/home/GETM_ERSEM_SETUPS/dws_200m
-RUN --mount=type=bind,source=dws_500m,target=/tmp/dws_500m,readonly \
-    mkdir -p /opt/home/GETM_ERSEM_SETUPS/dws_500m && \
-    rsync -av /tmp/dws_500m/ /opt/home/GETM_ERSEM_SETUPS/dws_500m/
+# Dutch Wadden Sea 200m setup (the only setup shipped in this repo)
+RUN --mount=type=bind,source=Container_dependency/dws_200m,target=/tmp/dws_200m,readonly \
+    mkdir -p /opt/home/GETM_ERSEM_SETUPS/dws_200m && \
+    rsync -av /tmp/dws_200m/ /opt/home/GETM_ERSEM_SETUPS/dws_200m/
 COPY Container_dependency/getm_configure.sh /opt/tools/getm/build/
 
 # --- Compile GOTM (1D) ---
@@ -214,7 +214,7 @@ RUN mkdir -p /opt/tools/getm/build && \
     sed -i 's/\r$//' getm_configure.sh && \
     chmod +x getm_configure.sh && \
     ./getm_configure.sh && \
-    cd /opt/home/GETM_ERSEM_SETUPS/dws_500m && \
+    cd /opt/home/GETM_ERSEM_SETUPS/dws_200m && \
     # link_restartfiles is not needed for comipilation, run it on cluster before running the model.
     # sed -i 's/\r$//' link_restartfiles && \
     sed -i 's/\r$//' compile_all_git && \
