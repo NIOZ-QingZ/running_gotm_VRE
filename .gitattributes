@@ -1,0 +1,5 @@
+# Files used inside the Linux container keep LF line endings on Windows
+*.sh      text eol=lf
+*.py      text eol=lf
+*.patch   text eol=lf
+*.sbatch  text eol=lf

@@ -190,6 +190,16 @@ RUN --mount=type=ssh \
     fi
 
 # --------------------------
+# Local changes to the model sources
+# --------------------------
+# bfm_p_fMAsink.patch: p_fMAsink in PelGlobal.nml scales the macroaggregate
+# sinking rate (default 1.0 = unchanged model).
+COPY Container_dependency/patches /opt/home/patches
+RUN cd /opt/home/BFM_SOURCES/bfm_2016 && \
+    sed -i 's/\r$//' /opt/home/patches/*.patch && \
+    git apply --verbose /opt/home/patches/bfm_p_fMAsink.patch
+
+# --------------------------
 # Copy the GETM_ERSEM_SETUPS folder
 # --------------------------
 RUN mkdir -p /opt/home/build/gotm
@@ -223,6 +233,17 @@ RUN mkdir -p /opt/tools/getm/build && \
     #./link_restartfiles && \
     ./compile_all_git && \
     echo "GOTM and GETM compilation completed successfully."
+
+# --------------------------
+# GOTM case and run command (used on HPC and in NaaVRE)
+# --------------------------
+# gotm-run copies a case to a run directory, applies namelist changes and runs
+# GOTM-BFM, e.g. gotm-run --out /tmp/run1 --set PelGlobal.nml:p_fMAsink=2.0
+COPY gotm-cases/OysterGrounds /opt/cases/OysterGrounds
+COPY Container_dependency/gotm_run.py /usr/local/bin/gotm-run
+RUN sed -i 's/\r$//' /usr/local/bin/gotm-run && \
+    chmod 755 /usr/local/bin/gotm-run && \
+    chmod -R a+rX /opt/cases
 
 # Create build directory
 # RUN mkdir -p $HOME/tools/getm/build

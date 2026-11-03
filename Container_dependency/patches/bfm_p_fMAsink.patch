@@ -1,0 +1,34 @@
+diff --git a/src/BFM/PelB/ModulePelGlobal.f90 b/src/BFM/PelB/ModulePelGlobal.f90
+index 4f868c7..4b9c017 100644
+--- a/src/BFM/PelB/ModulePelGlobal.f90
++++ b/src/BFM/PelB/ModulePelGlobal.f90
+@@ -76,6 +76,7 @@
+   real(RLEN)  :: p_clMeO2o(iiMesoZooPlankton)  !! value of Low oxygen which control escape upwards
+   real(RLEN)  :: p_rMem(iiMesoZooPlankton)  !! value of Low oxygen which control escape upwards
+   real(RLEN)  :: p_rMim(iiMicroZooPlankton) !! value of Low oxygen which control escape upwards
++  real(RLEN)  :: p_fMAsink=1.0_RLEN  ! scaling factor for macroaggregate sinking rate
+   
+   real(RLEN)  :: qlR2P1  !! maximum porportiom in macro aggregates between 
+   real(RLEN)  :: qhP1R2  !! maximum porportiom in macro aggregates between 
+@@ -94,7 +95,7 @@
+   !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+   namelist /PelGlobal_parameters/p_rrR6m,p_raRZm,p_raR2m, &
+         p_chR2R2c,p_raPIm, &
+-        p_qhR2P1,p_rrPIm,p_clMiO2o,p_clMeO2o,p_rMem,p_rMim
++        p_qhR2P1,p_rrPIm,p_clMiO2o,p_clMeO2o,p_rMem,p_rMim,p_fMAsink
+   !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 
+   !BEGIN compute
+diff --git a/src/BFM/PelB/PelGlobal.F90 b/src/BFM/PelB/PelGlobal.F90
+index ee5256c..86ae1ce 100644
+--- a/src/BFM/PelB/PelGlobal.F90
++++ b/src/BFM/PelB/PelGlobal.F90
+@@ -418,7 +418,7 @@
+                                          PI_dw(:,i))**(0.333333)
+            buoyancy=pxMAStickControl
+            call CalcSinking(NO_BOXES,xSizeMA_m,xSizeMA_d,ETW,ESW,sedi_macragg)
+-           sedi_macragg=sedi_macragg*buoyancy
++           sedi_macragg=sedi_macragg*buoyancy*p_fMAsink
+            sediPI(:,i)=sedi_macragg* PIx_macr_c(:,i)/(NZERO+lcl_Ph)+p_rrPIm(i)
+            sediR2=sediR2 + R2x_macr_c(:,i) *sedi_macragg
+          elseif (CalcPhytoPlankton(i)) then
