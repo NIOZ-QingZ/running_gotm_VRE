@@ -126,9 +126,10 @@ ENV GOTM_BUILD_DIR=/opt/home/build/gotm
 # --------------------------
 # Clone repositories during build (using SSH with BuildKit mount)
 # --------------------------
-COPY Container_dependency/Model_source_codes /opt/home/Model_source_codes
-
+# Local copies (from Container_dependency/fetch_model_sources.sh) are used when present;
+# otherwise the repos are cloned from GitHub, which needs --ssh for the private ones.
 RUN --mount=type=ssh \
+    --mount=type=bind,source=Container_dependency/Model_source_codes,target=/opt/home/Model_source_codes,readonly \
     set -eux; \
     mkdir -p /opt/home/BFM_SOURCES \
              /opt/home/gotm-git \
@@ -138,14 +139,20 @@ RUN --mount=type=ssh \
              /opt/local/gotm \
              /opt/local/getm; \
     mkdir -p /root/.ssh && \
-    ssh-keyscan github.com >> /root/.ssh/known_hosts && \
+    (ssh-keyscan github.com >> /root/.ssh/known_hosts || true) && \
     git config --global user.email "qing.zhan@nioz.nl" && \
     git config --global user.name "NIOZ-QingZ" && \
-    echo "Cloning BFM..." && \
-    cd "$HOME/home/BFM_SOURCES" || exit 1 && \
-    git clone "git@github.com:jvdmolen/bfm_2016.git" && \
-    cd bfm_2016 || exit 1 && \
-    git checkout -b bfm2016_production_20250827 remotes/origin/bfm2016_production_20250827 && \
+    echo "Preparing BFM source..." && \
+    if [ -d /opt/home/Model_source_codes/bfm_2016 ] && [ "$(ls -A /opt/home/Model_source_codes/bfm_2016)" ]; then \
+        echo "Using local copy: Model_source_codes/bfm_2016"; \
+        cp -a /opt/home/Model_source_codes/bfm_2016 /opt/home/BFM_SOURCES/bfm_2016; \
+    else \
+        echo "Local BFM copy not found. Cloning from GitHub..."; \
+        cd "$HOME/home/BFM_SOURCES" || exit 1; \
+        git clone "git@github.com:jvdmolen/bfm_2016.git"; \
+        cd bfm_2016 || exit 1; \
+        git checkout -b bfm2016_production_20250827 remotes/origin/bfm2016_production_20250827; \
+    fi && \
     echo "Preparing GOTM source..." && \
     if [ -d /opt/home/Model_source_codes/gotm-git ] && [ "$(ls -A /opt/home/Model_source_codes/gotm-git)" ]; then \
         echo "Using local copy: Model_source_codes/gotm-git"; \
@@ -170,11 +177,17 @@ RUN --mount=type=ssh \
         cd /opt/home/getm-git || exit 1; \
         git checkout -b iow_20200609_bfm2016_20250116 969dceb73ca9d801c03eb7f218da1d45d5748db3; \
     fi && \
-    echo "Cloning FABM..." && \
-    cd "$HOME/home/fabm-git" || exit 1 && \
-    git clone "git@github.com:fabm-model/fabm.git" && \
-    cd fabm || exit 1 && \
-    git checkout -b master_20200610 e1f1f08e42d84f8324f5114924b67ad567719334
+    echo "Preparing FABM source..." && \
+    if [ -d /opt/home/Model_source_codes/fabm ] && [ "$(ls -A /opt/home/Model_source_codes/fabm)" ]; then \
+        echo "Using local copy: Model_source_codes/fabm"; \
+        cp -a /opt/home/Model_source_codes/fabm /opt/home/fabm-git/fabm; \
+    else \
+        echo "Local FABM copy not found. Cloning from GitHub..."; \
+        cd "$HOME/home/fabm-git" || exit 1; \
+        git clone "https://github.com/fabm-model/fabm.git"; \
+        cd fabm || exit 1; \
+        git checkout -b master_20200610 e1f1f08e42d84f8324f5114924b67ad567719334; \
+    fi
 
 # --------------------------
 # Copy the GETM_ERSEM_SETUPS folder
@@ -249,6 +262,10 @@ CMD ["/bin/bash"]
 #    - On Windows (Git Bash):
 #        eval $(ssh-agent -s)
 #        ssh-add ~/.ssh/id_rsa
+#
+# === OFFLINE BUILD (no SSH key needed) ===
+# bash Container_dependency/fetch_model_sources.sh   # once, downloads into Container_dependency/Model_source_codes
+# DOCKER_BUILDKIT=1 docker build -t getm-wad-container:latest .
 #
 # === BUILD COMMANDS ===
 # Linux/Mac with SSH agent:
