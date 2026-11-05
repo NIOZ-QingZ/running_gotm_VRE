@@ -21,9 +21,12 @@ clone_at() {
         return
     fi
     echo "Cloning $url -> $dir"
-    git clone "$url" "$DEST/$dir"
-    git -C "$DEST/$dir" checkout -b "$branch" "$ref"
-    git -C "$DEST/$dir" submodule update --init --recursive
+    # Keep Unix (LF) line endings, also on Windows with core.autocrlf=true:
+    # the sources are built in Linux and the patches expect LF.
+    local lf="-c core.autocrlf=false -c core.eol=lf"
+    git $lf clone --config core.autocrlf=false --config core.eol=lf "$url" "$DEST/$dir"
+    git $lf -C "$DEST/$dir" checkout -b "$branch" "$ref"
+    git $lf -C "$DEST/$dir" submodule update --init --recursive
 }
 
 # Same branches/commits as used in the Dockerfile.
