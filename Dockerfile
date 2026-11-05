@@ -146,6 +146,11 @@ RUN --mount=type=ssh \
     if [ -d /opt/home/Model_source_codes/bfm_2016 ] && [ "$(ls -A /opt/home/Model_source_codes/bfm_2016)" ]; then \
         echo "Using local copy: Model_source_codes/bfm_2016"; \
         cp -a /opt/home/Model_source_codes/bfm_2016 /opt/home/BFM_SOURCES/bfm_2016; \
+        cd /opt/home/BFM_SOURCES/bfm_2016; \
+        # a checkout on Windows writes symlinks as text files: restore them
+        git ls-files -s | awk '$1 == 120000 {print $4}' | while read -r f; do \
+            rm -f "$f"; git -c core.symlinks=true checkout -- "$f"; \
+        done; \
     else \
         echo "Local BFM copy not found. Cloning from GitHub..."; \
         cd "$HOME/home/BFM_SOURCES" || exit 1; \
