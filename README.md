@@ -116,6 +116,37 @@ For example, a shorter test sweep: `STOP="1975-01-01 00:00:00" sbatch --array=1-
 Check the results with `grep status $OUT_ROOT/*/run_info.json`, then compare
 `Y3c` in `$OUT_ROOT/fMAsink_*/OG.nc`.
 
+### One-year sweep and figure (p_fMAsink 1–6)
+
+[fMAsink_values.txt](hpc/fMAsink_values.txt) holds 1, 2, …, 6. Run the year
+1972 (about 6 min per run):
+
+```bash
+cd hpc
+START="1972-01-01 00:00:00" STOP="1973-01-01 00:00:00" sbatch --array=1-6 --time=0-01:00:00 sensitivity_fMAsink.sbatch
+```
+
+When all six tasks have finished, make the figure with
+[plot_fMAsink.py](hpc/plot_fMAsink.py). It runs inside the image, so nothing
+needs to be installed on laplace:
+
+```bash
+OUT_ROOT=/export/lv9/user/$USER/model_output/sensitivity/fMAsink
+SIF=~/Singularity_containers/getm-wad-container_fMAsink.sif
+singularity exec --cleanenv --bind $OUT_ROOT $SIF python3 plot_fMAsink.py $OUT_ROOT --year 1972
+```
+
+This writes `$OUT_ROOT/fMAsink_Y3c_1972.png` and a `.csv` with the numbers:
+(a) the annual mean suspension-feeder biomass `Y3c` against p_fMAsink,
+labelled with the % change from p_fMAsink = 1, and (b) the daily `Y3c` through
+the year for each value. `--var` selects another BFM variable, e.g.
+`--var jnetY3c` for net production.
+
+The run starts from the initial values in `bio_bfm.nml` (`Y3c0 = 800`), so a
+single year mostly shows the first response. For a response less affected by
+the start state, run more years (e.g. `STOP="1976-01-01 00:00:00"`) and plot
+a later year (`--year 1975`).
+
 ## 3. NaaVRE workflow component
 
 The workflow component wraps one `gotm-run` call. Specification for the

@@ -239,6 +239,11 @@ RUN mkdir -p /opt/tools/getm/build && \
 # --------------------------
 # gotm-run copies a case to a run directory, applies namelist changes and runs
 # GOTM-BFM, e.g. gotm-run --out /tmp/run1 --set PelGlobal.nml:p_fMAsink=2.0
+# Python netCDF and matplotlib for analysing the results inside the container
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3-netcdf4 \
+    python3-matplotlib \
+    && rm -rf /var/lib/apt/lists/*
 COPY gotm-cases/OysterGrounds /opt/cases/OysterGrounds
 COPY Container_dependency/gotm_run.py /usr/local/bin/gotm-run
 RUN sed -i 's/\r$//' /usr/local/bin/gotm-run && \

@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --mem=2G
 #SBATCH --time=0-08:00:00
-#SBATCH --array=1-5
+#SBATCH --array=1-6
 #SBATCH --output=fMAsink_%A_%a.out
 
 # Sensitivity of the suspension feeders (Y3) to the macroaggregate sinking
