@@ -1,0 +1,4 @@
+task 2 on no61: p_fMAsink=1.0 -> /export/lv9/user/qzhan/model_output/sensitivity/fMAsink/fMAsink_1.0
+set PelGlobal.nml p_fMAsink = 1.0
+running /opt/local/gotm/bin/gotm in /export/lv9/user/qzhan/model_output/sensitivity/fMAsink/fMAsink_1.0
+GOTM-BFM run finished after 1960 s (see /export/lv9/user/qzhan/model_output/sensitivity/fMAsink/fMAsink_1.0/log.out)
