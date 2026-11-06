@@ -207,11 +207,22 @@ RUN --mount=type=ssh \
 # Local changes to the model sources
 # --------------------------
 # bfm_p_fMAsink.patch: p_fMAsink in PelGlobal.nml scales the macroaggregate
-# sinking rate (default 1.0 = unchanged model).
+#   sinking rate (default 1.0 = unchanged model).
+# bfm_silt_fluff.patch: silt method 5 (Silt.nml), Baretta & Ruardij (1988)
+#   sedimentation/resuspension through a fluff layer Q8x on the bed
+#   (default method 4 = unchanged model).
+# A patch whose changes are already in a local source copy
+# (Container_dependency/Model_source_codes) is skipped.
 COPY Container_dependency/patches /opt/home/patches
 RUN cd /opt/home/BFM_SOURCES/bfm_2016 && \
     sed -i 's/\r$//' /opt/home/patches/*.patch && \
-    git apply --verbose /opt/home/patches/bfm_p_fMAsink.patch
+    for p in bfm_p_fMAsink.patch bfm_silt_fluff.patch; do \
+        if git apply --reverse --check /opt/home/patches/$p 2>/dev/null; then \
+            echo "$p: already in the source, skipped"; \
+        else \
+            git apply --verbose /opt/home/patches/$p || exit 1; \
+        fi; \
+    done
 
 # --------------------------
 # Copy the GETM_ERSEM_SETUPS folder

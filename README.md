@@ -26,6 +26,22 @@ are described by the same arguments.
   that scales the macroaggregate sinking rate in `PelGlobal.F90`. The default
   is 1.0, which gives the same results as the unpatched model, so existing
   `PelGlobal.nml` files keep working.
+- [bfm_silt_fluff.patch](Container_dependency/patches/bfm_silt_fluff.patch):
+  silt `method=5` in `Silt.nml`, after Baretta & Ruardij (1988, Chap. 5.3).
+  Sedimentation and resuspension follow their eq. 5.3–5.5 (wind-dependent
+  `pDOWN`, `seddep`, `resdep`), with a new benthic state variable `Q8x`
+  (fluff layer on the bed, mg/m²) between the water and the bed. Silt moves
+  between `Q8x` and the bottom water layer of `R9x` only, so the total is
+  conserved. New parameters in `Silt_parameters`: `p_pDOWN0`, `p_W50`,
+  `p_minwind`, `p_seddep`, `p_resdep`, `p_rtid` (defaults: Ems-Dollard values);
+  initial value `Q8x0` in `bfm_ben_init_nml` (default 10 g/m²). The default
+  `method=4` gives the same results as before. Example:
+  `gotm-run --out RUN --set Silt.nml:Silt_parameters:method=5`.
+
+The patches are applied during the build; a patch is skipped when its changes
+are already in a local source copy (`Container_dependency/Model_source_codes`).
+To update a patch after changing the BFM source there:
+`git -C Container_dependency/Model_source_codes/bfm_2016 diff > Container_dependency/patches/<name>.patch`.
 
 ## `gotm-run`
 

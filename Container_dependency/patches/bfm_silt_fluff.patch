@@ -1,0 +1,207 @@
+diff --git a/src/BFM/General/GlobalDefsBFM.model.orig b/src/BFM/General/GlobalDefsBFM.model.orig
+index 4fbc8b5..4ff346b 100644
+--- a/src/BFM/General/GlobalDefsBFM.model.orig
++++ b/src/BFM/General/GlobalDefsBFM.model.orig
+@@ -357,6 +357,7 @@ end
+     Q9x         : mass of silt in water column at previous step: mg/m2
+     Qp9x        : mass of silt in water column 2 steps ago: mg/m2
+     QSx         : mass of silt in first 30 cm of benthic system :mg/m2
++    Q8x         : silt in fluff layer on the bed : mg/m2
+ 
+     group BenUrea[n] :mmol N/m3
+ 		Qu 	: Urea
+diff --git a/src/BFM/General/init_var_bfm.F90 b/src/BFM/General/init_var_bfm.F90
+index 058aeed..ae18072 100644
+--- a/src/BFM/General/init_var_bfm.F90
++++ b/src/BFM/General/init_var_bfm.F90
+@@ -80,7 +80,7 @@
+    REALTYPE, dimension(:), pointer  ::lcl_state
+    REALTYPE, dimension(NO_BOXES_XY) ::alpha,r_xy1,r_xy2
+ 
+-   REALTYPE  :: Y1c0, Y2c0, Y3c0, Y4c0, Y5c0, &
++   REALTYPE  :: Y1c0, Y2c0, Y3c0, Y4c0, Y5c0, Q8x0, &
+                 Q1c0, Q11c0, Q21c0, Q2c0, Q12c0, Q6c0, Yy3c0, &
+                 K3n0, G4n0, K15s0, BP1c0,H1c0,  &
+                 H2c0, H3c0, HNc0,Hac0, K1p0, K11p0, K21p0,     &
+@@ -102,7 +102,7 @@
+ 
+    namelist /bfm_ben_init_nml/calc_init_bennut_states,p_poro0, &
+                            p_qpQIc,p_qnQIc,p_qsQIc, &
+-                           Y1c0, Y2c0, Y3c0,  Y4c0, Y5c0, BP1c0, &
++                           Y1c0, Y2c0, Y3c0,  Y4c0, Y5c0, BP1c0, Q8x0, &
+                            Q1c0, Q11c0, Q21c0, Q2c0, Q12c0, Q6c0,          &
+                            K3n0, G4n0, H1c0,          &
+                            H2c0, H3c0, HNc0,Hac0, K1p0, K11p0, K21p0,   &
+@@ -182,6 +182,7 @@
+    Y1c0  = _ONE_
+    Y2c0  = _ONE_
+    Y3c0  = _ONE_
++   Q8x0 = 10000.0 ! mg/m2 silt in fluff layer (10 g/m2)
+    Yy3c0  = _ZERO_
+    BP1c0  = _ONE_
+    Y4c0  = _ONE_
+@@ -443,6 +444,7 @@
+       write(LOGUNIT,*) 'p-poro',p_poro
+       Y1c  = Y1c0
+       Y2c  = Y2c0
++      Q8x = Q8x0
+       Y3c  = Y3c0
+       Yy3c  = Yy3c0
+       Ys3c  = ZERO
+diff --git a/src/BFM/Silt/ModuleSilt.f90 b/src/BFM/Silt/ModuleSilt.f90
+index dde7d9a..2994143 100644
+--- a/src/BFM/Silt/ModuleSilt.f90
++++ b/src/BFM/Silt/ModuleSilt.f90
+@@ -58,12 +58,20 @@
+   !         2:  limit sedimentation for shallow water
+   !         3:  limit sedimentation for shallow water (updated method as used in JSR paper)
+   !         4:  much simpler and more universal limitation of sedimentation rates (preferred)
++  !         5:  Baretta & Ruardij (1988) sedimentation/resuspension with a fluff layer Q8x on the bed (Chap. 5.3, eq. 5.3-5.5)
+   ! p_SampleDepth: obsolete
+   ! stick_fact:    factor to limit resuspension assuming a proportion of (1-stick_fact)
+   !                remains tied in with the coarse fraction. Default value is for 
+   !                3D runs. For 1D runs use 0.25
+   integer     :: method
+   real(RLEN)  :: p_SampleDepth=0.01, stick_fact=0.15
++  ! method 5 (Baretta & Ruadij 1988), defaults are the Ems-Dollard values
++  real(RLEN)  :: p_pDown0=0.8_RLEN  ! max. fraction of silt going down (-)
++  real(RLEN)  :: p_W50=2.0_RLEN     ! half-saturation wind speed (m/s)
++  real(RLEN)  :: p_minwind=3.0_RLEN ! wind speed above which resuspension increases (m/s)
++  real(RLEN)  :: p_seddep=0.4365_RLEN ! settling water column per tide (m)
++  real(RLEN)  :: p_resdep=0.1261_RLEN ! resuspension height (m)
++  real(RLEN)  :: p_rtid=1.95_RLEN     ! number of tides per day (1/d)
+   real(RLEN),dimension(:),allocatable    :: start_R9x
+ 
+   
+@@ -78,7 +86,8 @@
+ 
+   !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+   integer              :: status
+-  namelist /Silt_parameters/ method,p_SampleDepth,stick_fact
++  namelist /Silt_parameters/ method,p_SampleDepth,stick_fact, &
++                             p_pDown0,p_W50,p_minwind,p_seddep,p_resdep,p_rtid
+   !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 
+   !BEGIN compute
+@@ -98,6 +107,13 @@
+     close(NMLUNIT)
+     write(LOGUNIT,*) "#  Namelist is:"
+     write(LOGUNIT,nml=Silt_parameters)
++    if (method == 5) then
++      ! method 5: no GOTM settling and no fixed bottom concentration for R9x;
++      ! silt reaches the bed only through the fluff layer Q8x (SiltFluffFluxes)
++      iiPELSINKREF(ppR9x)=-1000000
++      write(LOGUNIT, *) "# Silt method 5: exchange with the bed via fluff layer Q8x"
++    endif
++
+ !   if (sw_adv==0 ) then
+ !     iiPELSINKREF(ppR9x)=-1000000 
+ !     write(LOGUNIT,*) "#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-"
+diff --git a/src/BFM/Silt/Silt.F90 b/src/BFM/Silt/Silt.F90
+index 5c4dc93..616c02b 100644
+--- a/src/BFM/Silt/Silt.F90
++++ b/src/BFM/Silt/Silt.F90
+@@ -32,7 +32,7 @@
+ #ifdef nopointers
+   use mem,  ONLY: D3STATE
+ #else
+-  use mem,  ONLY: Q9x,Qp9x,R9x, ppR9x,ERHO,Wind,ETW,ETAUB,EUWIND,EVWIND, &
++  use mem,  ONLY: Q8x,Q9x,Qp9x,R9x, ppR9x,ERHO,Wind,ETW,ETAUB,EUWIND,EVWIND, &
+                   EUCURR_LEVEL,EVCURR_LEVEL,R2c,sediR9,NO_BOXES_XY, &
+                   Hs_out,Tz_out,u_orb_out,TauW,TauC,TauBed,ws_out,eta_out
+   use mem,  ONLY: iiPelSinkREF
+@@ -104,6 +104,7 @@
+      REAL(RLEN)                        :: U, Hs, Tz, tau, uw, R9x_new, R9x_old
+      REAL(RLEN)                        :: tau_w, tau_c, tau_bed, eta
+      REAL(RLEN)                        :: R9x_surf, R9x_bot, R9x_grad
++     REAL(RLEN)                        :: pDOWN, Mbar, sed, resus ! method 5
+      REAL(RLEN), PARAMETER             :: g=9.81, fw=0.1
+      REAL(RLEN), PARAMETER             :: grainsize=250*1E-6, ws_max=0.002, rho_s=2650, nu_kin_ref=1.0E-6, t_ref=20.0
+      REAL(RLEN), PARAMETER             :: d_eromin=0.01, dlim1=10.0D0, dlim2=5.0D0, dlimi=dlim2+1.0D+00
+@@ -284,6 +285,41 @@
+             R9x(:)=1000.0
+         end select
+ 
++       case (5)          ! Baretta & Ruardij (1988), fluff layer Q8x
++         ! wind effect, eq. 5.3: more wind -> smaller fraction going down
++         pDOWN=p_pDOWN0*p_W50/(p_W50+max(ZERO,Wind-p_minwind))
++
++         ! no settling through GOTM: sedimentation is calculated here
++         ws(:,ppR9x)=ZERO
++
++         ! depth-mean suspended silt (mg/m3)
++         Mbar=sum(R9x(1:NO_BOXES)*Depth(1:NO_BOXES))/tdepth
++
++         ! gross sedimentation, eq. 5.4 (mg/m2/d): silt settling out of a
++         ! water layer of p_seddep above the bed, p_rtid times per day
++         sed=p_rtid*p_seddep*pDOWN*R9x(1)
++
++         ! gross resuspension, eq. 5.5 (mg/m2/d): total mud = suspended silt
++         ! + fluff layer spread over the water column
++         resus=p_rtid*p_resdep*(DONE-pDOWN)*(Mbar+Q8x(1)/tdepth)
++
++         ! within one time step, take no more than each pool holds
++         resus=min(resus, Q8x(1)/delta)
++         sed=min(sed, R9x(1)*Depth(1)/delta)
++
++         ! net resuspension (>0) or sedimentation (<0), mg/m2/d
++         jrESS=resus-sed
++
++         ! effective settling velocity (m/d): detritus bound to silt sinks with it
++         sediR9=ZERO
++         sediR9(1)=p_rtid*p_seddep*pDOWN
++         ws_out=ZERO
++
++         select case (InitializeModel)
++           case (1)
++             R9x(:)=1000.0
++         end select
++
+      end select
+ 
+   end
+@@ -291,3 +327,31 @@
+ !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ ! MODEL  BFM - Biogeochemical Flux Model version 2.50
+ !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
++
++!-----------------------------------------------------------------------------
++! SiltFluffFluxes (method 5, Baretta & Ruardij 1988)
++! Moves the net resuspension jrESS (mg/m2/d, calculated in SiltDynamics)
++! between the fluff layer Q8x and the bottom water layer of R9x.
++! jrESS > 0: fluff layer -> water; jrESS < 0: water -> fluff layer.
++!-----------------------------------------------------------------------------
++subroutine SiltFluffFluxes
++
++use global_mem, ONLY: RLEN, ZERO
++use mem, ONLY: ppR9x, ppQ8x, jrESS, Depth, NO_BOXES, iiPel, iiBen, &
++flux_vector
++use mem_Silt, ONLY: method
++
++IMPLICIT NONE
++REAL(RLEN), dimension(NO_BOXES) :: rate
++
++if (method /=5) return
++
++! water column: only the bottom layer (box 1) exchanges with the bed
++rate=ZERO
++rate(1)=jrESS(1)/Depth(1)  ! mg/m3/d
++call flux_vector(iiPel, ppR9x, ppR9x, rate)
++
++! fluff layer: loses what goes into the water, gains what settles
++call flux_vector(iiBen, ppQ8x, ppQ8x, -jrESS) ! mg/m2/d 
++
++end subroutine SiltFluffFluxes
+\ No newline at end of file
+diff --git a/src/gotm/bio_bfm.F90 b/src/gotm/bio_bfm.F90
+index 7bdb6ed..f157932 100644
+--- a/src/gotm/bio_bfm.F90
++++ b/src/gotm/bio_bfm.F90
+@@ -460,6 +460,7 @@ use bfm_output,only:var_ave
+ !LEVEL1 'benthicsilt'
+ !stop
+    call BenthicSiltDist(0,0.0D+00)
++   call SiltFluffFluxes
+ !LEVEL1 'get_d3_model_flag'
+ !stop
+    call get_d3_model_flag_from_getm(d3_model_flag)
