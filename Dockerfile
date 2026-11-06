@@ -55,6 +55,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     m4 \
     && rm -rf /var/lib/apt/lists/*
 
+# Python netCDF and matplotlib for analysing the results inside the container.
+# Installed here, before the model sources, so that changing the model does
+# not re-run apt-get (and does not need the Ubuntu servers).
+RUN apt-get -o Acquire::Retries=5 update && \
+    apt-get -o Acquire::Retries=5 install -y --no-install-recommends \
+    python3-netcdf4 \
+    python3-matplotlib \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set GCC 6.4 as default
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 100 && \
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 100 && \
@@ -244,11 +253,6 @@ RUN mkdir -p /opt/tools/getm/build && \
 # --------------------------
 # gotm-run copies a case to a run directory, applies namelist changes and runs
 # GOTM-BFM, e.g. gotm-run --out /tmp/run1 --set PelGlobal.nml:p_fMAsink=2.0
-# Python netCDF and matplotlib for analysing the results inside the container
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-netcdf4 \
-    python3-matplotlib \
-    && rm -rf /var/lib/apt/lists/*
 COPY gotm-cases/OysterGrounds /opt/cases/OysterGrounds
 COPY Container_dependency/gotm_run.py /usr/local/bin/gotm-run
 RUN sed -i 's/\r$//' /usr/local/bin/gotm-run && \
