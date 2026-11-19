@@ -1,25 +1,30 @@
 diff --git a/src/BFM/Ben/FilterFeeder.F90 b/src/BFM/Ben/FilterFeeder.F90
-index e2ac5d5..8cb34d4 100644
+index e2ac5d5..12ffd6a 100644
 --- a/src/BFM/Ben/FilterFeeder.F90
 +++ b/src/BFM/Ben/FilterFeeder.F90
-@@ -1024,8 +1024,14 @@ endif
+@@ -1024,8 +1024,19 @@ endif
      select case (y)
        case (iiY3)
          jspaY3c=NZERO
 -!       cx_any=food_PIc(iiP6,:)*(DONE-efilP6Y3)
 -!       x_quality=(food -food_PIc(iiP6,:))/(food+cx_any)
-+        ! food quality: share of the food that is not Phaeocystis; colonies
-+        ! that hamper filtering (efilP6Y3<1) count extra in the denominator.
-+        ! Only used for spawning when sw_quality=1 (FilterFeeder.nml).
++        ! food quality: share of the food that is good food.
++        ! Bad food = p_qbadP6 * Phaeocystis cells (P6)
++        !          + p_qbadR2 * TEP eaten with diatoms (R2)
++        !          + p_qbadR3 * TEP in Phaeocystis colonies (R3).
++        ! Phaeocystis colonies that hamper filtering (efilP6Y3<1) count extra
++        ! in the denominator. Only used for spawning when sw_quality=1
++        ! (FilterFeeder.nml). p_qbadP6=1, p_qbadR2=p_qbadR3=0: Phaeocystis only.
 +        x_quality=DONE
 +        if (sw_quality==1) then
-+          cx_any=food_PIc(:,iiP6)*(DONE-efilP6Y3)
-+          x_quality=(food-food_PIc(:,iiP6))/(NZERO+food+cx_any)
++          cx_any=p_qbadP6*food_PIc(:,iiP6)*(DONE-efilP6Y3)
++          x_quality=(food-p_qbadP6*food_PIc(:,iiP6) &
++                     -p_qbadR2*R2x_food_c-p_qbadR3*food_R3)/(NZERO+food+cx_any)
 +        endif
          if (p_xspawning>ZERO) then
            !limit spawning if already a high biomass of young ones are present.
            !This is a way to avoid modelling explicit the modelling the reserve
-@@ -1041,7 +1047,7 @@ endif
+@@ -1041,7 +1052,7 @@ endif
            sx_any=sx_any*insw_vector(active-DONE) &
  !JM            *insw_vector(efsatY3(:,y)-p_fsat_y) &
              *insw_vector(in_arg) &
@@ -29,35 +34,39 @@ index e2ac5d5..8cb34d4 100644
            sx_any=sx_any*insw_vector(sx_any-p_lxspawning) *&
                                                       insw_vector(10.0-TauBed)
 diff --git a/src/BFM/Ben/ModuleFilterFeeder.f90 b/src/BFM/Ben/ModuleFilterFeeder.f90
-index d05fd43..641460a 100644
+index d05fd43..d7e2184 100644
 --- a/src/BFM/Ben/ModuleFilterFeeder.f90
 +++ b/src/BFM/Ben/ModuleFilterFeeder.f90
-@@ -105,6 +105,9 @@
+@@ -105,6 +105,12 @@
    real(RLEN)  :: p_xsteep=10.0     ! steppness of the function to calulcate
                                     ! resuspension rate of YY3
    integer     :: sw_lim    !set limitation on filtering 0 :no limitation 1:limitation by Phaeo: 2:by particles: 3both
 +  integer     :: sw_quality=0  ! food-quality check on spawning: 0 off (default), 1 on
 +  real(RLEN)  :: p_xquality=0.5 ! with sw_quality=1: spawn only if food quality > p_xquality
-+                                ! quality = non-Phaeocystis share of the food (0..1)
++                                ! quality = share of the food that is good food (0..1)
++  real(RLEN)  :: p_qbadP6=1.0   ! weight of Phaeocystis cells (P6) as bad food (0..1)
++  real(RLEN)  :: p_qbadR2=0.0   ! weight of TEP eaten with diatoms (R2) as bad food (0..1)
++  real(RLEN)  :: p_qbadR3=0.0   ! weight of TEP in Phaeocystis colonies (R3) as bad food (0..1)
    !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
    ! SHARED PUBLIC FUNCTIONS (must be explicited below "contains")
  
-@@ -123,7 +126,8 @@
+@@ -123,7 +129,8 @@
      p_srs, p_sra, p_pur, p_sd, p_sd2, p_vum,p_clO2o, &
      p_height,p_pePel,p_pR6Pel,p_pR6Pels,p_sxresus,p_xtauC, &
      p_max, p_clu, p_qnc, p_qpc,p_qCaCO3Y3c,p_smYy3c,p_pYy3Z2, &
 -    p_xspawning,p_lxspawning,p_heighty,p_fsat_y,p_clxTemp,p_xsteep,sw_lim
 +    p_xspawning,p_lxspawning,p_heighty,p_fsat_y,p_clxTemp,p_xsteep,sw_lim, &
-+    sw_quality,p_xquality
++    sw_quality,p_xquality,p_qbadP6,p_qbadR2,p_qbadR3
    !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  
    !BEGIN compute
-@@ -132,7 +136,7 @@
+@@ -132,7 +139,8 @@
    !  Open the namelist file(s)
    !-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  
 -   p_xspawning=0.0;p_fsat_y=0.7;sw_lim=0;
 +   p_xspawning=0.0;p_fsat_y=0.7;sw_lim=0;sw_quality=0;p_xquality=0.5
++   p_qbadP6=1.0;p_qbadR2=0.0;p_qbadR3=0.0
     write(LOGUNIT,*) "#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
     write(LOGUNIT,*) "#  Reading FilterFeeder parameters.."
     open(NMLUNIT,file='FilterFeeder.nml',status='old',action='read',err=100)
