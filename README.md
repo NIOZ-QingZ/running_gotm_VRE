@@ -40,6 +40,10 @@ are described by the same arguments.
 
 The patches are applied during the build; a patch is skipped when its changes
 are already in a local source copy (`Container_dependency/Model_source_codes`).
+Bugs found in the model code, and their fixes, are logged in
+[MODEL_FIXES.md](MODEL_FIXES.md), together with how to build and run the GOTM
+debug image (`docker build --build-arg GOTM_BUILD=Debug ...`) used to find them.
+
 To update a patch after changing the BFM source there:
 `git -C Container_dependency/Model_source_codes/bfm_2016 diff > Container_dependency/patches/<name>.patch`.
 

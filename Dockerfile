@@ -237,11 +237,33 @@ RUN --mount=type=bind,source=Container_dependency/dws_200m,target=/tmp/dws_200m,
 COPY Container_dependency/getm_configure.sh /opt/tools/getm/build/
 
 # --- Compile GOTM (1D) ---
+# GOTM_BUILD=Release (default): optimised build, as before.
+# GOTM_BUILD=Debug: no optimisation, with runtime checks, for finding bugs in the
+# BFM code with short OysterGrounds runs (see MODEL_FIXES.md). Build it as a
+# separate image, e.g.
+#   docker build --build-arg GOTM_BUILD=Debug -t qingzfly/getm-wad-container:debug .
+# GOTM_DEBUG_FFLAGS can be overridden, e.g. to add
+# -ffpe-trap=invalid,zero,overflow once the -fcheck=all errors are fixed.
+# Only GOTM is affected; GETM is always built as before.
+ARG GOTM_BUILD=Release
+ARG GOTM_DEBUG_FFLAGS="-O0 -g -fbacktrace -fcheck=all -finit-real=snan -Wall"
 RUN mkdir -p /opt/home/build/gotm && \
     cd /opt/home/build/gotm && \
-    cmake $GOTMDIR -DFABM_BASE=$FABMDIR -DCMAKE_INSTALL_PREFIX=/opt/local/gotm && \
-    make -j$(nproc) && \
-    make install
+    if [ "$GOTM_BUILD" = "Debug" ]; then \
+        cmake $GOTMDIR -DFABM_BASE=$FABMDIR -DCMAKE_INSTALL_PREFIX=/opt/local/gotm \
+              -DCMAKE_BUILD_TYPE=Debug \
+              -DCMAKE_Fortran_FLAGS="$GOTM_DEBUG_FFLAGS" \
+              -DCMAKE_Fortran_FLAGS_DEBUG="$GOTM_DEBUG_FFLAGS"; \
+    else \
+        cmake $GOTMDIR -DFABM_BASE=$FABMDIR -DCMAKE_INSTALL_PREFIX=/opt/local/gotm; \
+    fi && \
+    make -j$(nproc) 2>&1 | tee /opt/home/build/gotm/build.log && \
+    test ${PIPESTATUS[0]} -eq 0 && \
+    make install && \
+    printf 'GOTM_BUILD=%s\nGOTM_DEBUG_FFLAGS=%s\nBFM commit=%s\n' "$GOTM_BUILD" \
+        "$([ "$GOTM_BUILD" = "Debug" ] && echo "$GOTM_DEBUG_FFLAGS")" \
+        "$(git -C $BFMDIR rev-parse --short HEAD 2>/dev/null || echo unknown)" \
+        > /opt/local/gotm/BUILD_INFO
 
 # --- Compile GETM (3D) ---
 RUN mkdir -p /opt/tools/getm/build && \
