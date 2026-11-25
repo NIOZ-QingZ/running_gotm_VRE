@@ -13,6 +13,7 @@ file, applied at image build) · `fixed-source` (fixed in the BFM repository) ·
 
 | ID | Status | File | Short description | Affects GETM runs | Found |
 | --- | --- | --- | --- | --- | --- |
+| FIX-002 | fixed-patch | `src/BFM/Silt/Silt.F90` | `ws_out` (40 boxes) set from `ws` with 41 levels (0:NO_BOXES) | yes | 2026-11-25, debug build |
 | FIX-001 | open | `src/BFM/Ben/FilterFeeder.F90` | microzooplankton food summed over boxes instead of groups (`sum(ZI_Fc,1)`) | yes | 2026-11-23, code review (colleague) |
 
 ## How to add an entry
@@ -89,6 +90,33 @@ happen at a deep North Sea site (drying of tidal flats). For those, run a few
 days of GETM built with the same flags.
 
 ---
+
+## FIX-002: silt settling velocity output has one level too many
+
+- **Status:** fixed-patch
+- **File / lines:** `src/BFM/Silt/Silt.F90:278` (279 after `bfm_silt_fluff.patch`),
+  silt methods 1–4.
+- **Found:** 2026-11-25, debug build (`-fcheck=all`), OysterGrounds 1972–1973.
+  The run stopped at initialisation (`init_var_bfm` → `SiltDynamics`) with
+  "Array bound mismatch for dimension 1 of array 'ws_out' (40/41)".
+- **Problem:** `ws_out=ws(:,ppR9x)` copies all levels of `ws`. `ws` is
+  allocated `ws(0:nlev,1:numc)` in `src/gotm/bio.F90` (level 0 = bed), so the
+  slice has `NO_BOXES+1` values, while the diagnostic `ws_out` has `NO_BOXES`.
+- **Cause:** the same mismatch was already in the old layout
+  (`ws(ppR9x,:)` with `ws(1:numc,0:nlev)`); the change of array layout kept it.
+- **Effect on results:** output only. `ws_out` is written to the output file
+  and not used in the model. Without bounds checks the copy either shifts
+  `ws_out` one level (box k gets the value of level k-1) or writes one value
+  past `ws_out` into the next diagnostic in `D3DIAGNOS` (`flPTN6r`, box 1),
+  depending on the compiler. Old `ws_out` output should not be trusted;
+  `flPTN6r` is recalculated every time step.
+- **Fix:** `ws_out=ws(1:NO_BOXES,ppR9x)`, i.e. the settling velocity at the
+  top of each box (after the interpolation to cell boundaries just above).
+  Patch `Container_dependency/patches/fix_FIX-002_silt_ws_out_bounds.patch`.
+- **Verification (to do):** rebuild the debug image and rerun the 1972–1973
+  run; it should get past `SiltDynamics`.
+- **GETM copies:** not fixed. `BFM_SOURCES/bfm_2016/src/BFM/Silt/Silt.F90` and
+  `Container_dependency/wave_update/Silt.F90:278` have the same line.
 
 ## FIX-001: microzooplankton food summed over boxes instead of groups
 

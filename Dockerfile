@@ -216,7 +216,8 @@ RUN --mount=type=ssh \
 COPY Container_dependency/patches /opt/home/patches
 RUN cd /opt/home/BFM_SOURCES/bfm_2016 && \
     sed -i 's/\r$//' /opt/home/patches/*.patch && \
-    for p in bfm_p_fMAsink.patch bfm_silt_fluff.patch; do \
+    for p in bfm_p_fMAsink.patch bfm_silt_fluff.patch \
+             fix_FIX-002_silt_ws_out_bounds.patch; do \
         if git apply --reverse --check /opt/home/patches/$p 2>/dev/null; then \
             echo "$p: already in the source, skipped"; \
         else \

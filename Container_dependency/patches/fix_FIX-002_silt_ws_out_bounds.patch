@@ -1,0 +1,14 @@
+diff --git a/src/BFM/Silt/Silt.F90 b/src/BFM/Silt/Silt.F90
+index 5c4dc93..6080c26 100644
+--- a/src/BFM/Silt/Silt.F90
++++ b/src/BFM/Silt/Silt.F90
+@@ -275,7 +275,8 @@
+         TauC=tau_c
+         TauBed=tau_bed
+ !JM        ws_out=ws(ppR9x,:)
+-        ws_out=ws(:,ppR9x)
++        ! ws is ws(0:NO_BOXES,:) (level 0 = bed), ws_out has NO_BOXES values
++        ws_out=ws(1:NO_BOXES,ppR9x)
+         eta_out=eta
+  
+         select case (InitializeModel)         
